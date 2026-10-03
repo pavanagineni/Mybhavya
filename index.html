@@ -24,7 +24,7 @@
       overflow: hidden;
     }
 
-    /* Glowing Badge */
+    /* Glowing Construction Badge */
     .badge {
       display: inline-flex;
       align-items: center;
@@ -47,7 +47,7 @@
       animation: spin 3s linear infinite;
     }
 
-    /* Animated Gold Domain Name */
+    /* Animated Gold Domain Title */
     .domain-title {
       font-size: clamp(38px, 8vw, 64px);
       font-weight: 900;
@@ -61,7 +61,7 @@
       margin-bottom: 12px;
     }
 
-    /* Subtitle with Pulse */
+    /* Subtitle */
     .subtitle {
       font-size: clamp(16px, 3.5vw, 22px);
       font-weight: 500;
@@ -76,7 +76,7 @@
       font-size: 15px;
       max-width: 440px;
       line-height: 1.6;
-      margin-bottom: 34px;
+      margin-bottom: 30px;
     }
 
     /* Moving Hazard Striped Bar */
@@ -95,24 +95,46 @@
       background-size: 56px 12px;
       animation: slideStripes 1.2s linear infinite;
       box-shadow: 0 0 25px rgba(255, 215, 0, 0.35);
+      margin-bottom: 36px;
     }
 
-    /* Keyframe Animations */
+    /* Real-Time Live Views Container */
+    .views-card {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      background: rgba(20, 20, 20, 0.85);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 16px;
+      padding: 12px 24px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .views-label {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .views-badge img {
+      display: block;
+      height: 24px;
+      border-radius: 4px;
+    }
+
+    /* Animations */
     @keyframes shine {
-      to {
-        background-position: 200% center;
-      }
+      to { background-position: 200% center; }
     }
-
     @keyframes slideStripes {
-      0% {
-        background-position: 0 0;
-      }
-      100% {
-        background-position: 56px 0;
-      }
+      0% { background-position: 0 0; }
+      100% { background-position: 56px 0; }
     }
-
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -133,5 +155,15 @@
   </p>
 
   <div class="hazard-bar"></div>
+
+  <!-- Real-Time Live Views Counter -->
+  <div class="views-card">
+    <div class="views-label">
+      <span>👁️</span> Total Visitors
+    </div>
+    <div class="views-badge">
+      <img src="https://countapi.mileshilliard.com/api/v1/hit/24krt_official_visitors/shield?text=Visits&bgcolor=ffd700&textcolor=000000" alt="Live Views Count">
+    </div>
+  </div>
 </body>
 </html>
