@@ -3,167 +3,543 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>24krt.com - Under Construction</title>
+  <title>Happy Birthday • October 3 | 24krt.com</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js"></script>
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+
     body {
-      background: radial-gradient(circle at center, #1a1600 0%, #080808 100%);
-      color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(ellipse at bottom, #1c1505 0%, #0c0a06 50%, #030303 100%);
       min-height: 100vh;
-      text-align: center;
-      padding: 24px;
-      overflow: hidden;
+      overflow-x: hidden;
+      touch-action: manipulation;
     }
 
-    /* Glowing Construction Badge */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 215, 0, 0.1);
-      border: 1px solid rgba(255, 215, 0, 0.35);
-      color: #ffd700;
-      padding: 8px 18px;
-      border-radius: 30px;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+    .font-luxury {
+      font-family: 'Cinzel', serif;
     }
 
-    .badge span {
-      display: inline-block;
-      animation: spin 3s linear infinite;
-    }
-
-    /* Animated Gold Domain Title */
-    .domain-title {
-      font-size: clamp(38px, 8vw, 64px);
-      font-weight: 900;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      background: linear-gradient(120deg, #ffd700 0%, #fff3a8 30%, #d4af37 60%, #fff 80%, #ffd700 100%);
-      background-size: 200% auto;
+    /* Shimmering Gold Text */
+    .gold-shimmer-text {
+      background: linear-gradient(135deg, 
+        #d4af37 0%, 
+        #fff4cc 25%, 
+        #ffd700 50%, 
+        #c59b27 75%, 
+        #fff9e6 100%
+      );
+      background-size: 250% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: shine 3s linear infinite;
-      margin-bottom: 12px;
+      animation: goldSheen 4s linear infinite;
     }
 
-    /* Subtitle */
-    .subtitle {
-      font-size: clamp(16px, 3.5vw, 22px);
-      font-weight: 500;
-      letter-spacing: 1.5px;
-      color: #e2e8f0;
-      margin-bottom: 14px;
-      text-transform: uppercase;
+    @keyframes goldSheen {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    .description {
-      color: #94a3b8;
-      font-size: 15px;
-      max-width: 440px;
-      line-height: 1.6;
-      margin-bottom: 30px;
+    /* Floating Balloons & Sparkles */
+    @keyframes floatGentle {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(2deg); }
     }
 
-    /* Moving Hazard Striped Bar */
-    .hazard-bar {
-      width: 280px;
-      max-width: 85%;
-      height: 12px;
-      border-radius: 12px;
-      background: repeating-linear-gradient(
-        -45deg,
-        #ffd700,
-        #ffd700 14px,
-        #222222 14px,
-        #222222 28px
-      );
-      background-size: 56px 12px;
-      animation: slideStripes 1.2s linear infinite;
-      box-shadow: 0 0 25px rgba(255, 215, 0, 0.35);
-      margin-bottom: 36px;
+    .balloon-float-1 { animation: floatGentle 4s ease-in-out infinite; }
+    .balloon-float-2 { animation: floatGentle 4.8s ease-in-out infinite 0.7s; }
+    .balloon-float-3 { animation: floatGentle 4.3s ease-in-out infinite 1.4s; }
+
+    /* Character idle breathing and blinking */
+    @keyframes breathe {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .character-idle {
+      animation: breathe 3s ease-in-out infinite;
     }
 
-    /* Real-Time Live Views Container */
-    .views-card {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      background: rgba(20, 20, 20, 0.85);
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      border-radius: 16px;
-      padding: 12px 24px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    /* Gift Wobble Animation */
+    @keyframes giftWobble {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      20% { transform: scale(1.08) rotate(-4deg); }
+      40% { transform: scale(1.08) rotate(4deg); }
+      60% { transform: scale(1.1) rotate(-3deg); }
+      80% { transform: scale(1.05) rotate(2deg); }
     }
 
-    .views-label {
-      font-size: 12px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #94a3b8;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .wobble-gift {
+      animation: giftWobble 0.9s infinite ease-in-out;
     }
 
-    .views-badge img {
-      display: block;
-      height: 24px;
-      border-radius: 4px;
+    /* Pulsing Glow */
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.3), inset 0 0 15px rgba(255, 215, 0, 0.2);
+      }
+      50% {
+        box-shadow: 0 0 45px rgba(255, 215, 0, 0.65), inset 0 0 25px rgba(255, 215, 0, 0.4);
+      }
     }
 
-    /* Animations */
-    @keyframes shine {
-      to { background-position: 200% center; }
+    .glow-aura {
+      animation: pulseGlow 2.5s infinite ease-in-out;
     }
-    @keyframes slideStripes {
-      0% { background-position: 0 0; }
-      100% { background-position: 56px 0; }
+
+    /* Golden Halo Rays */
+    @keyframes rotateRays {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .halo-rays {
+      animation: rotateRays 25s linear infinite;
+    }
+
+    /* Gift Lid Pop Off */
+    .lid-popped {
+      transform: translateY(-90px) rotate(-18deg) scale(0.9);
+      opacity: 0;
+      transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
   </style>
 </head>
-<body>
-  <div class="badge">
-    <span>⚙️</span> Under Construction
+
+<body class="text-amber-50 flex flex-col items-center justify-between min-h-screen p-4 sm:p-6 relative select-none">
+  
+  <!-- Subtle Golden Light Aura Background -->
+  <div class="fixed inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0">
+    <div class="w-[500px] h-[500px] sm:w-[750px] sm:h-[750px] bg-amber-500/10 rounded-full blur-[120px]"></div>
+    <div id="haloBackdrop" class="absolute w-[600px] h-[600px] sm:w-[900px] sm:h-[900px] opacity-0 transition-opacity duration-1000 halo-rays pointer-events-none" style="background: radial-gradient(circle, rgba(255,215,0,0.18) 0%, rgba(212,175,55,0.05) 45%, transparent 70%);"></div>
   </div>
 
-  <h1 class="domain-title">24krt.com</h1>
-
-  <div class="subtitle">Something exciting is coming soon</div>
-
-  <p class="description">
-    We are currently crafting a brand-new experience. Stay tuned for the launch!
-  </p>
-
-  <div class="hazard-bar"></div>
-
-  <!-- Real-Time Live Views Counter -->
-  <div class="views-card">
-    <div class="views-label">
-      <span>👁️</span> Total Visitors
+  <!-- Ambient Sound Enable Pill Notice -->
+  <header class="w-full max-w-md flex justify-between items-center z-20 pt-2">
+    <div class="flex items-center gap-2 bg-amber-950/60 border border-amber-600/30 px-3.5 py-1.5 rounded-full text-xs font-semibold text-amber-300 backdrop-blur-md">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+      Special Celebration
     </div>
-    <div class="views-badge">
-      <img src="https://countapi.mileshilliard.com/api/v1/hit/24krt_official_visitors/shield?text=Visits&bgcolor=ffd700&textcolor=000000" alt="Live Views Count">
+    <button id="soundToggleBtn" onclick="toggleAudio()" class="text-xs flex items-center gap-1.5 bg-black/40 border border-amber-500/30 px-3 py-1.5 rounded-full text-amber-200/80 active:scale-95 transition-all">
+      <span id="soundIcon">🔊</span>
+      <span id="soundText">Sound ON</span>
+    </button>
+  </header>
+
+  <main class="w-full max-w-lg flex flex-col items-center justify-center my-auto z-10 text-center py-2">
+    
+    <!-- Birthday Banner Top Tag -->
+    <div class="mb-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-purple-500/20 to-amber-500/20 border border-amber-400/30 shadow-lg shadow-amber-950/40">
+      <span class="text-lg">✨</span>
+      <span class="text-xs sm:text-sm font-bold uppercase tracking-widest text-amber-200">October 3 • Birthday Edition</span>
+      <span class="text-lg">✨</span>
     </div>
-  </div>
+
+    <!-- Festive Greeting -->
+    <h2 id="birthdaySub" class="text-2xl sm:text-3xl font-bold tracking-tight text-white drop-shadow-md transition-all duration-700">
+      Happy Birthday! 🎉
+    </h2>
+    <p id="instructionText" class="text-xs sm:text-sm text-amber-200/80 mt-1 max-w-xs transition-opacity duration-500">
+      A tiny gift arrived just for you. Tap the box to unwrap it!
+    </p>
+
+    <div class="relative w-full max-w-sm h-72 sm:h-80 flex items-center justify-center my-3">
+      
+      <!-- Floating Colorful Party Balloons -->
+      <div class="absolute left-3 top-2 balloon-float-1 z-0 pointer-events-none opacity-90">
+        <svg width="42" height="64" viewBox="0 0 50 75" fill="none">
+          <ellipse cx="25" cy="28" rx="22" ry="26" fill="url(#purpleBalloon)" />
+          <polygon points="23,54 27,54 25,58" fill="#7e22ce" />
+          <path d="M25,58 Q22,66 26,72" stroke="#d8b4fe" stroke-width="1.5" fill="none" />
+          <defs>
+            <radialGradient id="purpleBalloon" cx="35%" cy="25%" r="65%">
+              <stop offset="0%" stop-color="#d8b4fe" />
+              <stop offset="60%" stop-color="#9333ea" />
+              <stop offset="100%" stop-color="#581c87" />
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="absolute right-4 top-4 balloon-float-2 z-0 pointer-events-none opacity-90">
+        <svg width="46" height="70" viewBox="0 0 50 75" fill="none">
+          <ellipse cx="25" cy="28" rx="22" ry="26" fill="url(#goldBalloon)" />
+          <polygon points="23,54 27,54 25,58" fill="#b45309" />
+          <path d="M25,58 Q29,66 23,73" stroke="#fef08a" stroke-width="1.5" fill="none" />
+          <defs>
+            <radialGradient id="goldBalloon" cx="30%" cy="25%" r="65%">
+              <stop offset="0%" stop-color="#fffbeb" />
+              <stop offset="40%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#78350f" />
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- Left: Stylized Doctor Character based on the Miniature Figurine -->
+      <div id="characterWrapper" class="absolute left-2 sm:left-4 bottom-2 character-idle z-10 flex flex-col items-center">
+        <!-- SVG Vector Character: Dark Curly Hair, Purple Doctor Kurta, Stethoscope, Big expressive eyes -->
+        <svg class="w-36 h-56 sm:w-40 sm:h-64 filter drop-shadow-2xl" viewBox="0 0 160 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Purple Kurta Texture -->
+            <pattern id="kurtaPattern" width="12" height="12" patternUnits="userSpaceOnUse">
+              <path d="M6 1 L11 6 L6 11 L1 6 Z" fill="none" stroke="#e9d5ff" stroke-width="0.8" opacity="0.6"/>
+              <circle cx="6" cy="6" r="1" fill="#fef08a" opacity="0.8"/>
+            </pattern>
+            <!-- Gold Trim Gradient -->
+            <linearGradient id="goldBorder" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fde047" />
+              <stop offset="100%" stop-color="#b45309" />
+            </linearGradient>
+            <!-- Skin Tone Gradient -->
+            <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#f5caa6" />
+              <stop offset="100%" stop-color="#d69b74" />
+            </linearGradient>
+          </defs>
+
+          <!-- Back Curly Hair Volume -->
+          <g fill="#171311">
+            <circle cx="50" cy="55" r="28" />
+            <circle cx="110" cy="55" r="28" />
+            <circle cx="40" cy="85" r="24" />
+            <circle cx="120" cy="85" r="24" />
+            <circle cx="38" cy="115" r="20" />
+            <circle cx="122" cy="115" r="20" />
+            <circle cx="80" cy="45" r="34" />
+          </g>
+
+          <!-- Head Shape -->
+          <ellipse cx="80" cy="75" rx="36" ry="38" fill="url(#skin)" />
+
+          <!-- Front Curly Hair Framing -->
+          <path d="M44 55 Q 60 40 80 46 Q 100 40 116 55 Q 124 75 118 95 Q 112 70 80 62 Q 48 70 42 95 Q 36 75 44 55 Z" fill="#1b1613" />
+          <!-- Hair Curls Texture -->
+          <path d="M38 78 Q 30 92 40 106 Q 34 118 44 128" stroke="#120e0c" stroke-width="8" stroke-linecap="round" fill="none"/>
+          <path d="M122 78 Q 130 92 120 106 Q 126 118 116 128" stroke="#120e0c" stroke-width="8" stroke-linecap="round" fill="none"/>
+
+          <!-- Eyes, Eyebrows & Gentle Smile -->
+          <ellipse cx="64" cy="74" rx="3" ry="1.5" fill="#451a03" />
+          <ellipse cx="96" cy="74" rx="3" ry="1.5" fill="#451a03" />
+          <!-- Big warm dark eyes -->
+          <ellipse cx="65" cy="82" rx="7" ry="8" fill="#1f1815" />
+          <ellipse cx="95" cy="82" rx="7" ry="8" fill="#1f1815" />
+          <!-- Catchlight sparkles in eyes -->
+          <circle cx="67" cy="80" r="2.5" fill="#ffffff" />
+          <circle cx="97" cy="80" r="2.5" fill="#ffffff" />
+          <circle cx="63" cy="85" r="1.2" fill="#ffffff" opacity="0.8"/>
+          <circle cx="93" cy="85" r="1.2" fill="#ffffff" opacity="0.8"/>
+
+          <!-- Cute bindi / forehead mark -->
+          <circle cx="80" cy="70" r="1.8" fill="#b91c1c" />
+
+          <!-- Cheerful gentle smile -->
+          <path d="M71 96 Q80 104 89 96" stroke="#b91c1c" stroke-width="2.5" stroke-linecap="round" fill="none" />
+          <!-- Rosy Cheeks -->
+          <ellipse cx="58" cy="89" rx="6" ry="3.5" fill="#f87171" opacity="0.35" />
+          <ellipse cx="102" cy="89" rx="6" ry="3.5" fill="#f87171" opacity="0.35" />
+
+          <!-- Neck & Gold Chain -->
+          <path d="M72 110 L72 124 L88 124 L88 110 Z" fill="#d69b74" />
+          <path d="M72 116 Q80 125 88 116" stroke="url(#goldBorder)" stroke-width="2" fill="none" />
+
+          <!-- Body / Purple Doctor Kurta -->
+          <path d="M52 128 L108 128 L116 195 L44 195 Z" fill="#7e22ce" />
+          <path d="M52 128 L108 128 L116 195 L44 195 Z" fill="url(#kurtaPattern)" />
+          
+          <!-- Kurta Collar & Gold Border Placket -->
+          <path d="M80 128 L80 170" stroke="url(#goldBorder)" stroke-width="2.5" />
+          <path d="M43 192 L117 192" stroke="url(#goldBorder)" stroke-width="3" />
+
+          <!-- White Doctor Stethoscope Draped Over Shoulders -->
+          <g filter="drop-shadow(0px 2px 2px rgba(0,0,0,0.4))">
+            <!-- Tubing -->
+            <path d="M60 128 C55 145 56 166 69 174 C78 180 84 172 84 165" stroke="#f1f5f9" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+            <path d="M100 128 C105 145 104 166 91 174 C82 180 84 165 84 165" stroke="#f1f5f9" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+            <!-- Silver Chest Piece -->
+            <circle cx="84" cy="168" r="6" fill="#cbd5e1" stroke="#475569" stroke-width="1.5" />
+            <circle cx="84" cy="168" r="2.5" fill="#94a3b8" />
+          </g>
+
+          <!-- Little Hands resting forward -->
+          <circle cx="48" cy="166" r="6" fill="#f5caa6" />
+          <circle cx="112" cy="166" r="6" fill="#f5caa6" />
+
+          <!-- Purple Trousers & Cute Shoes -->
+          <path d="M57 195 L59 230 L73 230 L75 195 Z" fill="#581c87" />
+          <path d="M85 195 L87 230 L101 230 L103 195 Z" fill="#581c87" />
+          <!-- Black shoes -->
+          <rect x="56" y="228" width="18" height="8" rx="4" fill="#1e1b4b" />
+          <rect x="86" y="228" width="18" height="8" rx="4" fill="#1e1b4b" />
+        </svg>
+
+        <!-- Mini tag name badge -->
+        <span class="mt-1 px-2.5 py-0.5 rounded-full bg-purple-900/80 border border-purple-400/40 text-[10px] font-bold text-purple-200 tracking-wider">
+          Dr. Bhavya 🩺
+        </span>
+      </div>
+
+      <div id="giftBoxContainer" class="absolute right-3 sm:right-6 bottom-4 z-20 cursor-pointer flex flex-col items-center group" onclick="openGiftBox()">
+        
+        <!-- Tap indicator badge -->
+        <div id="tapPrompt" class="mb-2 text-[11px] font-bold bg-amber-400 text-black px-2.5 py-0.5 rounded-full shadow-lg animate-bounce flex items-center gap-1">
+          <span>🎁</span> Tap Me!
+        </div>
+
+        <div class="relative w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center">
+          
+          <!-- Golden Radial Glow underneath Gift -->
+          <div class="absolute inset-0 bg-amber-400/20 rounded-full blur-xl glow-aura"></div>
+
+          <!-- The Gift Box SVG with separated Lid for Opening -->
+          <div id="giftBoxWrapper" class="w-full h-full relative wobble-gift">
+            
+            <!-- Gift Lid with Ribbon -->
+            <div id="giftLid" class="absolute top-2 inset-x-0 z-30 transition-transform duration-700 origin-bottom">
+              <svg viewBox="0 0 120 40" class="w-full filter drop-shadow-lg">
+                <!-- Golden Lid Base -->
+                <rect x="6" y="14" width="108" height="20" rx="4" fill="url(#giftGoldLid)" stroke="#d97706" stroke-width="1.5"/>
+                <!-- Red / Velvet Ribbon Crossing -->
+                <rect x="52" y="14" width="16" height="20" fill="#dc2626" />
+                <rect x="57" y="14" width="6" height="20" fill="#ef4444" />
+                <!-- Big Ribbon Bow -->
+                <path d="M60 14 C45 2 35 6 46 14 C35 14 38 4 60 14 Z" fill="#ef4444" />
+                <path d="M60 14 C75 2 85 6 74 14 C85 14 82 4 60 14 Z" fill="#ef4444" />
+                <circle cx="60" cy="14" r="5" fill="#b91c1c" />
+                <defs>
+                  <linearGradient id="giftGoldLid" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#d97706" />
+                    <stop offset="50%" stop-color="#fef08a" />
+                    <stop offset="100%" stop-color="#d97706" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+
+            <!-- Gift Base Box Body -->
+            <div id="giftBase" class="absolute bottom-2 inset-x-0 z-20">
+              <svg viewBox="0 0 120 80" class="w-full filter drop-shadow-2xl">
+                <!-- Box Body -->
+                <rect x="14" y="0" width="92" height="74" rx="6" fill="url(#giftGoldBody)" stroke="#b45309" stroke-width="1.5"/>
+                <!-- Vertical Ribbon -->
+                <rect x="52" y="0" width="16" height="74" fill="#dc2626" />
+                <rect x="57" y="0" width="6" height="74" fill="#ef4444" />
+                <!-- Gold sparkles on box surface -->
+                <circle cx="34" cy="30" r="2" fill="#ffffff" opacity="0.8" />
+                <circle cx="86" cy="46" r="2.5" fill="#ffffff" opacity="0.8" />
+                <defs>
+                  <linearGradient id="giftGoldBody" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#fef08a" />
+                    <stop offset="40%" stop-color="#f59e0b" />
+                    <stop offset="100%" stop-color="#78350f" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="revealTarget" class="w-full max-w-md opacity-0 scale-75 pointer-events-none transition-all duration-1000 transform mt-3 flex flex-col items-center">
+      
+      <!-- Premium Glass Gold Card -->
+      <div class="w-full bg-gradient-to-b from-amber-500/15 via-black/80 to-amber-950/30 border-2 border-amber-400/50 rounded-3xl p-6 sm:p-7 shadow-[0_0_50px_rgba(245,158,11,0.25)] backdrop-blur-xl relative overflow-hidden">
+        
+        <!-- Glowing Ambient Lines -->
+        <div class="absolute -top-10 -right-10 w-36 h-36 bg-amber-400/20 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -bottom-10 -left-10 w-36 h-36 bg-purple-500/20 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="inline-flex items-center gap-2 text-xs font-black tracking-widest text-amber-300 uppercase px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 mb-3">
+          <span>👑</span> Official Domain Reveal <span>👑</span>
+        </div>
+
+        <!-- 24krt.com Majestic Title -->
+        <h1 class="text-4xl sm:text-5xl font-black font-luxury gold-shimmer-text tracking-wider filter drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] py-1">
+          24krt.com
+        </h1>
+
+        <!-- Under Construction Subtitle -->
+        <div class="flex items-center justify-center gap-2 mt-2">
+          <span class="w-8 h-[1px] bg-gradient-to-r from-transparent to-amber-400"></span>
+          <p class="text-xs sm:text-sm font-semibold tracking-widest uppercase text-amber-200/90">
+            Crafting Perfection • Coming Soon
+          </p>
+          <span class="w-8 h-[1px] bg-gradient-to-l from-transparent to-amber-400"></span>
+        </div>
+
+        <!-- Animated Progress Strip -->
+        <div class="w-full max-w-[240px] h-2 mx-auto mt-4 rounded-full overflow-hidden bg-neutral-900 border border-amber-500/40 p-[1px]">
+          <div class="h-full rounded-full bg-gradient-to-r from-amber-600 via-amber-300 to-amber-500 animate-pulse"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="w-full max-w-md flex flex-col sm:flex-row items-center justify-between text-xs text-amber-300/60 py-3 z-10 border-t border-amber-500/20 gap-2">
+    <div>Celebrate Dr. Bhavya • Oct 3</div>
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+      <span>24krt.com</span>
+    </div>
+  </footer>
+
+  <!-- Hidden sound synthesizers and scripts -->
+  <script>
+    let audioReady = false;
+    let soundEnabled = true;
+    let chimeSynth = null;
+    let fanfareSynth = null;
+
+    function initAudio() {
+      if (audioReady) return;
+      try {
+        Tone.start();
+        // Soft celebratory bell chime
+        chimeSynth = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: "triangle8" },
+          envelope: { attack: 0.02, decay: 1.2, sustain: 0.1, release: 1.5 }
+        }).toDestination();
+        chimeSynth.volume.value = -6;
+
+        // Triumphant Fanfare Synth
+        fanfareSynth = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: "fatsawtooth", count: 3, spread: 20 },
+          envelope: { attack: 0.04, decay: 0.8, sustain: 0.2, release: 1.2 }
+        }).toDestination();
+        fanfareSynth.volume.value = -8;
+
+        audioReady = true;
+      } catch (e) {
+        console.warn("Audio initialization postponed:", e);
+      }
+    }
+
+    function toggleAudio() {
+      soundEnabled = !soundEnabled;
+      const icon = document.getElementById('soundIcon');
+      const text = document.getElementById('soundText');
+      if (soundEnabled) {
+        icon.textContent = '🔊';
+        text.textContent = 'Sound ON';
+        initAudio();
+      } else {
+        icon.textContent = '🔇';
+        text.textContent = 'Muted';
+      }
+    }
+
+    function playGiftOpenSound() {
+      if (!soundEnabled || !audioReady) return;
+      try {
+        const now = Tone.now();
+        // Play sparkly ascending arpeggio notes
+        chimeSynth.triggerAttackRelease(["C5", "E5"], "16n", now);
+        chimeSynth.triggerAttackRelease(["G5", "B5"], "16n", now + 0.12);
+        chimeSynth.triggerAttackRelease(["C6", "E6", "G6"], "8n", now + 0.25);
+
+        // Grand final chord
+        fanfareSynth.triggerAttackRelease(["C4", "G4", "C5", "E5"], "2n", now + 0.45);
+      } catch (e) {
+        console.warn(e);
+      }
+    }
+
+    let giftOpened = false;
+
+    function triggerConfettiBurst() {
+      // Side confetti cannons
+      confetti({
+        particleCount: 70,
+        spread: 80,
+        origin: { y: 0.65, x: 0.7 },
+        colors: ['#ffd700', '#f59e0b', '#a855f7', '#ec4899', '#ffffff']
+      });
+
+      confetti({
+        particleCount: 50,
+        spread: 70,
+        origin: { y: 0.6, x: 0.3 },
+        colors: ['#ffd700', '#ffffff', '#c084fc']
+      });
+
+      // Gold Sparkle star shower
+      setTimeout(() => {
+        confetti({
+          particleCount: 90,
+          spread: 100,
+          startVelocity: 45,
+          origin: { y: 0.5, x: 0.5 },
+          shapes: ['circle'],
+          colors: ['#ffd700', '#fff9e6', '#d4af37']
+        });
+      }, 350);
+    }
+
+    function openGiftBox() {
+      if (giftOpened) return;
+      giftOpened = true;
+
+      // Start audio if first touch
+      initAudio();
+      playGiftOpenSound();
+
+      // UI Elements
+      const giftLid = document.getElementById('giftLid');
+      const giftBoxWrapper = document.getElementById('giftBoxWrapper');
+      const tapPrompt = document.getElementById('tapPrompt');
+      const instructionText = document.getElementById('instructionText');
+      const revealTarget = document.getElementById('revealTarget');
+      const haloBackdrop = document.getElementById('haloBackdrop');
+      const giftBoxContainer = document.getElementById('giftBoxContainer');
+
+      // 1. Remove wobbling and animate lid shooting up
+      giftBoxWrapper.classList.remove('wobble-gift');
+      giftLid.classList.add('lid-popped');
+      tapPrompt.style.opacity = '0';
+      instructionText.textContent = '✨ Surprise Unlocked! Happy Birthday Dr. Bhavya! ✨';
+      instructionText.classList.add('text-amber-300', 'font-bold');
+
+      // 2. Confetti explosion
+      triggerConfettiBurst();
+
+      // 3. Reveal 24krt.com smoothly
+      setTimeout(() => {
+        // Expand rays
+        haloBackdrop.classList.remove('opacity-0');
+        haloBackdrop.classList.add('opacity-100');
+
+        // Reveal card
+        revealTarget.classList.remove('opacity-0', 'scale-75', 'pointer-events-none');
+        revealTarget.classList.add('opacity-100', 'scale-100');
+
+        // Gently reduce gift box size to focus on 24krt.com
+        giftBoxContainer.style.transition = 'all 1s ease-in-out';
+        giftBoxContainer.style.transform = 'scale(0.85)';
+      }, 400);
+    }
+
+    // Auto-countdown trigger: if user doesn't tap within 3.5s, unlock automatically
+    window.addEventListener('load', () => {
+      const autoTimer = setTimeout(() => {
+        if (!giftOpened) {
+          openGiftBox();
+        }
+      }, 3500);
+
+      // Clean up timer if clicked before
+      document.body.addEventListener('click', () => clearTimeout(autoTimer), { once: true });
+      document.body.addEventListener('touchstart', () => clearTimeout(autoTimer), { once: true });
+    });
+  </script>
 </body>
 </html>
