@@ -2,40 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday • October 3 | 24krt.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>24krt.com - Special Birthday Reveal</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: radial-gradient(ellipse at bottom, #1c1505 0%, #0c0a06 50%, #030303 100%);
+      background: radial-gradient(ellipse at 50% 35%, #1f1406 0%, #0d0a04 45%, #050402 100%);
       min-height: 100vh;
+      color: #fff;
       overflow-x: hidden;
-      touch-action: manipulation;
+      overflow-y: auto;
+      perspective: 1200px;
     }
 
     .font-luxury {
       font-family: 'Cinzel', serif;
     }
 
-    /* Shimmering Gold Text */
-    .gold-shimmer-text {
-      background: linear-gradient(135deg, 
-        #d4af37 0%, 
-        #fff4cc 25%, 
-        #ffd700 50%, 
-        #c59b27 75%, 
-        #fff9e6 100%
-      );
+    /* Shimmering Metallic Gold Gradients */
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fff3b0 0%, #ffd700 25%, #ffae19 50%, #ffffff 75%, #d4af37 100%);
       background-size: 250% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: goldSheen 4s linear infinite;
+      animation: goldSheen 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.45));
     }
 
     @keyframes goldSheen {
@@ -44,339 +47,455 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Floating Balloons & Sparkles */
-    @keyframes floatGentle {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-12px) rotate(2deg); }
+    /* Subtle ambient floating particle dust */
+    .ambient-glow {
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(234, 179, 8, 0.15) 0%, rgba(212, 175, 55, 0.05) 50%, transparent 70%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 1;
     }
 
-    .balloon-float-1 { animation: floatGentle 4s ease-in-out infinite; }
-    .balloon-float-2 { animation: floatGentle 4.8s ease-in-out infinite 0.7s; }
-    .balloon-float-3 { animation: floatGentle 4.3s ease-in-out infinite 1.4s; }
-
-    /* Character idle breathing and blinking */
-    @keyframes breathe {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
-    }
-    .character-idle {
-      animation: breathe 3s ease-in-out infinite;
+    /* 3D Diorama Stage Setup */
+    .diorama-stage {
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
-    /* Gift Wobble Animation */
-    @keyframes giftWobble {
-      0%, 100% { transform: scale(1) rotate(0deg); }
-      20% { transform: scale(1.08) rotate(-4deg); }
-      40% { transform: scale(1.08) rotate(4deg); }
-      60% { transform: scale(1.1) rotate(-3deg); }
-      80% { transform: scale(1.05) rotate(2deg); }
+    /* 3D Present Gift Box */
+    .gift-cube {
+      width: 110px;
+      height: 110px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
     }
 
-    .wobble-gift {
-      animation: giftWobble 0.9s infinite ease-in-out;
+    .gift-face {
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      background: linear-gradient(135deg, #7c1d34 0%, #4a0917 100%);
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* Pulsing Glow */
-    @keyframes pulseGlow {
-      0%, 100% {
-        box-shadow: 0 0 25px rgba(255, 215, 0, 0.3), inset 0 0 15px rgba(255, 215, 0, 0.2);
-      }
-      50% {
-        box-shadow: 0 0 45px rgba(255, 215, 0, 0.65), inset 0 0 25px rgba(255, 215, 0, 0.4);
-      }
+    /* Golden ribbon crossing */
+    .gift-face::before, .gift-face::after {
+      content: '';
+      position: absolute;
+      background: linear-gradient(90deg, #d4af37, #ffe57f, #b8860b);
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    }
+    .gift-face::before {
+      width: 22px;
+      height: 100%;
+    }
+    .gift-face::after {
+      height: 22px;
+      width: 100%;
     }
 
-    .glow-aura {
-      animation: pulseGlow 2.5s infinite ease-in-out;
+    .face-front  { transform: rotateY(0deg) translateZ(55px); }
+    .face-back   { transform: rotateY(180deg) translateZ(55px); }
+    .face-right  { transform: rotateY(90deg) translateZ(55px); }
+    .face-left   { transform: rotateY(-90deg) translateZ(55px); }
+    .face-top    { transform: rotateX(90deg) translateZ(55px); background: #91223d; }
+    .face-bottom { transform: rotateX(-90deg) translateZ(55px); }
+
+    /* Animated floating box wobbler */
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0px) rotateX(12deg) rotateY(15deg); }
+      50% { transform: translateY(-10px) rotateX(16deg) rotateY(20deg); }
     }
 
-    /* Golden Halo Rays */
-    @keyframes rotateRays {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    .halo-rays {
-      animation: rotateRays 25s linear infinite;
+    .floating-box {
+      animation: gentleFloat 3s ease-in-out infinite;
     }
 
-    /* Gift Lid Pop Off */
-    .lid-popped {
-      transform: translateY(-90px) rotate(-18deg) scale(0.9);
+    /* Gift Lid Ejection */
+    .lid-open .face-top {
+      animation: popLid 1s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+    }
+
+    @keyframes popLid {
+      0% { transform: rotateX(90deg) translateZ(55px); opacity: 1; }
+      40% { transform: rotateX(90deg) translateZ(180px) rotateZ(35deg) scale(1.15); opacity: 0.9; }
+      100% { transform: rotateX(120deg) translateZ(320px) translateY(-140px) rotateZ(120deg) scale(0.4); opacity: 0; }
+    }
+
+    /* Exploding Rays of Golden Light */
+    .light-beam {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 4px;
+      height: 240px;
+      background: linear-gradient(to top, rgba(255, 215, 0, 0.9), transparent);
+      transform-origin: bottom center;
+      pointer-events: none;
       opacity: 0;
-      transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      filter: blur(1px);
+    }
+
+    .revealed .light-beam {
+      animation: beamBurst 1.8s ease-out forwards;
+    }
+
+    @keyframes beamBurst {
+      0% { opacity: 0; transform: translate(-50%, -100%) scaleY(0.2) rotate(var(--angle)); }
+      30% { opacity: 1; transform: translate(-50%, -100%) scaleY(1.3) rotate(var(--angle)); }
+      100% { opacity: 0; transform: translate(-50%, -100%) scaleY(1.6) rotate(var(--angle)); }
+    }
+
+    /* 24krt.com Ascending Reveal */
+    .reveal-title-container {
+      transform: translateY(60px) scale(0.3);
+      opacity: 0;
+      transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .reveal-title-container.active {
+      transform: translateY(0px) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Construction Hazard Progress Ribbon */
+    .hazard-stripe {
+      background: repeating-linear-gradient(
+        -45deg,
+        #ffd700,
+        #ffd700 12px,
+        #1e1403 12px,
+        #1e1403 24px
+      );
+      background-size: 48px 100%;
+      animation: stripeScroll 1.2s linear infinite;
+    }
+
+    @keyframes stripeScroll {
+      0% { background-position: 0 0; }
+      100% { background-position: 48px 0; }
+    }
+
+    /* Pulsing Tap Badge */
+    @keyframes pulseTap {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); }
+      50% { transform: scale(1.06); box-shadow: 0 0 28px rgba(255, 215, 0, 0.85); }
+    }
+
+    .pulse-action {
+      animation: pulseTap 1.8s ease-in-out infinite;
+    }
+
+    /* Canvas for Confetti & Magic Particles */
+    #fx-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 40;
     }
   </style>
 </head>
 
-<body class="text-amber-50 flex flex-col items-center justify-between min-h-screen p-4 sm:p-6 relative select-none">
-  
-  <!-- Subtle Golden Light Aura Background -->
-  <div class="fixed inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0">
-    <div class="w-[500px] h-[500px] sm:w-[750px] sm:h-[750px] bg-amber-500/10 rounded-full blur-[120px]"></div>
-    <div id="haloBackdrop" class="absolute w-[600px] h-[600px] sm:w-[900px] sm:h-[900px] opacity-0 transition-opacity duration-1000 halo-rays pointer-events-none" style="background: radial-gradient(circle, rgba(255,215,0,0.18) 0%, rgba(212,175,55,0.05) 45%, transparent 70%);"></div>
-  </div>
+<body class="flex flex-col items-center justify-between p-3 sm:p-6 select-none">
+  <!-- Particle FX Canvas -->
+  <canvas id="fx-canvas"></canvas>
 
-  <!-- Ambient Sound Enable Pill Notice -->
-  <header class="w-full max-w-md flex justify-between items-center z-20 pt-2">
-    <div class="flex items-center gap-2 bg-amber-950/60 border border-amber-600/30 px-3.5 py-1.5 rounded-full text-xs font-semibold text-amber-300 backdrop-blur-md">
-      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-      Special Celebration
+  <div class="ambient-glow top-1/4"></div>
+
+  <!-- Top Header Bar -->
+  <header class="w-full max-w-2xl flex flex-col items-center text-center z-20 mt-1 sm:mt-2">
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-950/40 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-semibold mb-2 shadow-lg backdrop-blur-md">
+      <span>🎂</span>
+      <span>October 3 • Birthday Celebration</span>
     </div>
-    <button id="soundToggleBtn" onclick="toggleAudio()" class="text-xs flex items-center gap-1.5 bg-black/40 border border-amber-500/30 px-3 py-1.5 rounded-full text-amber-200/80 active:scale-95 transition-all">
-      <span id="soundIcon">🔊</span>
-      <span id="soundText">Sound ON</span>
-    </button>
+    <h2 class="text-xs sm:text-sm uppercase tracking-[0.25em] text-neutral-400 font-medium">
+      Dr. Bhavya Deepika Collectible Showcase
+    </h2>
   </header>
 
-  <main class="w-full max-w-lg flex flex-col items-center justify-center my-auto z-10 text-center py-2">
+  <!-- Main Diorama Center Area -->
+  <main class="w-full max-w-4xl flex-1 flex flex-col items-center justify-center relative z-10 my-4 sm:my-6">
     
-    <!-- Birthday Banner Top Tag -->
-    <div class="mb-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-purple-500/20 to-amber-500/20 border border-amber-400/30 shadow-lg shadow-amber-950/40">
-      <span class="text-lg">✨</span>
-      <span class="text-xs sm:text-sm font-bold uppercase tracking-widest text-amber-200">October 3 • Birthday Edition</span>
-      <span class="text-lg">✨</span>
-    </div>
-
-    <!-- Festive Greeting -->
-    <h2 id="birthdaySub" class="text-2xl sm:text-3xl font-bold tracking-tight text-white drop-shadow-md transition-all duration-700">
-      Happy Birthday! 🎉
-    </h2>
-    <p id="instructionText" class="text-xs sm:text-sm text-amber-200/80 mt-1 max-w-xs transition-opacity duration-500">
-      A tiny gift arrived just for you. Tap the box to unwrap it!
-    </p>
-
-    <div class="relative w-full max-w-sm h-72 sm:h-80 flex items-center justify-center my-3">
-      
-      <!-- Floating Colorful Party Balloons -->
-      <div class="absolute left-3 top-2 balloon-float-1 z-0 pointer-events-none opacity-90">
-        <svg width="42" height="64" viewBox="0 0 50 75" fill="none">
-          <ellipse cx="25" cy="28" rx="22" ry="26" fill="url(#purpleBalloon)" />
-          <polygon points="23,54 27,54 25,58" fill="#7e22ce" />
-          <path d="M25,58 Q22,66 26,72" stroke="#d8b4fe" stroke-width="1.5" fill="none" />
-          <defs>
-            <radialGradient id="purpleBalloon" cx="35%" cy="25%" r="65%">
-              <stop offset="0%" stop-color="#d8b4fe" />
-              <stop offset="60%" stop-color="#9333ea" />
-              <stop offset="100%" stop-color="#581c87" />
-            </radialGradient>
-          </defs>
-        </svg>
+    <!-- 24krt.com Grand Floating Trophy Banner (Reveals out of the box) -->
+    <div id="revealTarget" class="reveal-title-container flex flex-col items-center text-center mb-2 z-30">
+      <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-amber-400/10 border border-amber-400/40 text-amber-200 text-xs tracking-wider uppercase font-bold mb-2">
+        <span class="animate-spin text-[10px]">⚙️</span> Official Domain Revealed
       </div>
+      <h1 class="text-5xl sm:text-7xl font-luxury font-black gold-gradient-text tracking-wider">
+        24krt.com
+      </h1>
+      <p class="text-sm sm:text-base text-amber-100/90 font-medium mt-1">
+        Crafting something extraordinarily precious for Dr. Bhavya
+      </p>
 
-      <div class="absolute right-4 top-4 balloon-float-2 z-0 pointer-events-none opacity-90">
-        <svg width="46" height="70" viewBox="0 0 50 75" fill="none">
-          <ellipse cx="25" cy="28" rx="22" ry="26" fill="url(#goldBalloon)" />
-          <polygon points="23,54 27,54 25,58" fill="#b45309" />
-          <path d="M25,58 Q29,66 23,73" stroke="#fef08a" stroke-width="1.5" fill="none" />
-          <defs>
-            <radialGradient id="goldBalloon" cx="30%" cy="25%" r="65%">
-              <stop offset="0%" stop-color="#fffbeb" />
-              <stop offset="40%" stop-color="#f59e0b" />
-              <stop offset="100%" stop-color="#78350f" />
-            </radialGradient>
-          </defs>
-        </svg>
-      </div>
-
-      <!-- Left: Stylized Doctor Character based on the Miniature Figurine -->
-      <div id="characterWrapper" class="absolute left-2 sm:left-4 bottom-2 character-idle z-10 flex flex-col items-center">
-        <!-- SVG Vector Character: Dark Curly Hair, Purple Doctor Kurta, Stethoscope, Big expressive eyes -->
-        <svg class="w-36 h-56 sm:w-40 sm:h-64 filter drop-shadow-2xl" viewBox="0 0 160 250" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <!-- Purple Kurta Texture -->
-            <pattern id="kurtaPattern" width="12" height="12" patternUnits="userSpaceOnUse">
-              <path d="M6 1 L11 6 L6 11 L1 6 Z" fill="none" stroke="#e9d5ff" stroke-width="0.8" opacity="0.6"/>
-              <circle cx="6" cy="6" r="1" fill="#fef08a" opacity="0.8"/>
-            </pattern>
-            <!-- Gold Trim Gradient -->
-            <linearGradient id="goldBorder" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#fde047" />
-              <stop offset="100%" stop-color="#b45309" />
-            </linearGradient>
-            <!-- Skin Tone Gradient -->
-            <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#f5caa6" />
-              <stop offset="100%" stop-color="#d69b74" />
-            </linearGradient>
-          </defs>
-
-          <!-- Back Curly Hair Volume -->
-          <g fill="#171311">
-            <circle cx="50" cy="55" r="28" />
-            <circle cx="110" cy="55" r="28" />
-            <circle cx="40" cy="85" r="24" />
-            <circle cx="120" cy="85" r="24" />
-            <circle cx="38" cy="115" r="20" />
-            <circle cx="122" cy="115" r="20" />
-            <circle cx="80" cy="45" r="34" />
-          </g>
-
-          <!-- Head Shape -->
-          <ellipse cx="80" cy="75" rx="36" ry="38" fill="url(#skin)" />
-
-          <!-- Front Curly Hair Framing -->
-          <path d="M44 55 Q 60 40 80 46 Q 100 40 116 55 Q 124 75 118 95 Q 112 70 80 62 Q 48 70 42 95 Q 36 75 44 55 Z" fill="#1b1613" />
-          <!-- Hair Curls Texture -->
-          <path d="M38 78 Q 30 92 40 106 Q 34 118 44 128" stroke="#120e0c" stroke-width="8" stroke-linecap="round" fill="none"/>
-          <path d="M122 78 Q 130 92 120 106 Q 126 118 116 128" stroke="#120e0c" stroke-width="8" stroke-linecap="round" fill="none"/>
-
-          <!-- Eyes, Eyebrows & Gentle Smile -->
-          <ellipse cx="64" cy="74" rx="3" ry="1.5" fill="#451a03" />
-          <ellipse cx="96" cy="74" rx="3" ry="1.5" fill="#451a03" />
-          <!-- Big warm dark eyes -->
-          <ellipse cx="65" cy="82" rx="7" ry="8" fill="#1f1815" />
-          <ellipse cx="95" cy="82" rx="7" ry="8" fill="#1f1815" />
-          <!-- Catchlight sparkles in eyes -->
-          <circle cx="67" cy="80" r="2.5" fill="#ffffff" />
-          <circle cx="97" cy="80" r="2.5" fill="#ffffff" />
-          <circle cx="63" cy="85" r="1.2" fill="#ffffff" opacity="0.8"/>
-          <circle cx="93" cy="85" r="1.2" fill="#ffffff" opacity="0.8"/>
-
-          <!-- Cute bindi / forehead mark -->
-          <circle cx="80" cy="70" r="1.8" fill="#b91c1c" />
-
-          <!-- Cheerful gentle smile -->
-          <path d="M71 96 Q80 104 89 96" stroke="#b91c1c" stroke-width="2.5" stroke-linecap="round" fill="none" />
-          <!-- Rosy Cheeks -->
-          <ellipse cx="58" cy="89" rx="6" ry="3.5" fill="#f87171" opacity="0.35" />
-          <ellipse cx="102" cy="89" rx="6" ry="3.5" fill="#f87171" opacity="0.35" />
-
-          <!-- Neck & Gold Chain -->
-          <path d="M72 110 L72 124 L88 124 L88 110 Z" fill="#d69b74" />
-          <path d="M72 116 Q80 125 88 116" stroke="url(#goldBorder)" stroke-width="2" fill="none" />
-
-          <!-- Body / Purple Doctor Kurta -->
-          <path d="M52 128 L108 128 L116 195 L44 195 Z" fill="#7e22ce" />
-          <path d="M52 128 L108 128 L116 195 L44 195 Z" fill="url(#kurtaPattern)" />
-          
-          <!-- Kurta Collar & Gold Border Placket -->
-          <path d="M80 128 L80 170" stroke="url(#goldBorder)" stroke-width="2.5" />
-          <path d="M43 192 L117 192" stroke="url(#goldBorder)" stroke-width="3" />
-
-          <!-- White Doctor Stethoscope Draped Over Shoulders -->
-          <g filter="drop-shadow(0px 2px 2px rgba(0,0,0,0.4))">
-            <!-- Tubing -->
-            <path d="M60 128 C55 145 56 166 69 174 C78 180 84 172 84 165" stroke="#f1f5f9" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-            <path d="M100 128 C105 145 104 166 91 174 C82 180 84 165 84 165" stroke="#f1f5f9" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-            <!-- Silver Chest Piece -->
-            <circle cx="84" cy="168" r="6" fill="#cbd5e1" stroke="#475569" stroke-width="1.5" />
-            <circle cx="84" cy="168" r="2.5" fill="#94a3b8" />
-          </g>
-
-          <!-- Little Hands resting forward -->
-          <circle cx="48" cy="166" r="6" fill="#f5caa6" />
-          <circle cx="112" cy="166" r="6" fill="#f5caa6" />
-
-          <!-- Purple Trousers & Cute Shoes -->
-          <path d="M57 195 L59 230 L73 230 L75 195 Z" fill="#581c87" />
-          <path d="M85 195 L87 230 L101 230 L103 195 Z" fill="#581c87" />
-          <!-- Black shoes -->
-          <rect x="56" y="228" width="18" height="8" rx="4" fill="#1e1b4b" />
-          <rect x="86" y="228" width="18" height="8" rx="4" fill="#1e1b4b" />
-        </svg>
-
-        <!-- Mini tag name badge -->
-        <span class="mt-1 px-2.5 py-0.5 rounded-full bg-purple-900/80 border border-purple-400/40 text-[10px] font-bold text-purple-200 tracking-wider">
-          Dr. Bhavya 🩺
+      <!-- Animated Under Construction Hazard Indicator -->
+      <div class="mt-3 flex flex-col items-center w-64 sm:w-80">
+        <div class="hazard-stripe w-full h-3 rounded-full border border-amber-400/40 shadow-[0_0_15px_rgba(255,215,0,0.35)]"></div>
+        <span class="text-[11px] uppercase tracking-widest text-amber-400/80 font-bold mt-1.5">
+          🚧 Under Construction • Coming Soon
         </span>
       </div>
-
-      <div id="giftBoxContainer" class="absolute right-3 sm:right-6 bottom-4 z-20 cursor-pointer flex flex-col items-center group" onclick="openGiftBox()">
-        
-        <!-- Tap indicator badge -->
-        <div id="tapPrompt" class="mb-2 text-[11px] font-bold bg-amber-400 text-black px-2.5 py-0.5 rounded-full shadow-lg animate-bounce flex items-center gap-1">
-          <span>🎁</span> Tap Me!
-        </div>
-
-        <div class="relative w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center">
-          
-          <!-- Golden Radial Glow underneath Gift -->
-          <div class="absolute inset-0 bg-amber-400/20 rounded-full blur-xl glow-aura"></div>
-
-          <!-- The Gift Box SVG with separated Lid for Opening -->
-          <div id="giftBoxWrapper" class="w-full h-full relative wobble-gift">
-            
-            <!-- Gift Lid with Ribbon -->
-            <div id="giftLid" class="absolute top-2 inset-x-0 z-30 transition-transform duration-700 origin-bottom">
-              <svg viewBox="0 0 120 40" class="w-full filter drop-shadow-lg">
-                <!-- Golden Lid Base -->
-                <rect x="6" y="14" width="108" height="20" rx="4" fill="url(#giftGoldLid)" stroke="#d97706" stroke-width="1.5"/>
-                <!-- Red / Velvet Ribbon Crossing -->
-                <rect x="52" y="14" width="16" height="20" fill="#dc2626" />
-                <rect x="57" y="14" width="6" height="20" fill="#ef4444" />
-                <!-- Big Ribbon Bow -->
-                <path d="M60 14 C45 2 35 6 46 14 C35 14 38 4 60 14 Z" fill="#ef4444" />
-                <path d="M60 14 C75 2 85 6 74 14 C85 14 82 4 60 14 Z" fill="#ef4444" />
-                <circle cx="60" cy="14" r="5" fill="#b91c1c" />
-                <defs>
-                  <linearGradient id="giftGoldLid" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stop-color="#d97706" />
-                    <stop offset="50%" stop-color="#fef08a" />
-                    <stop offset="100%" stop-color="#d97706" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-
-            <!-- Gift Base Box Body -->
-            <div id="giftBase" class="absolute bottom-2 inset-x-0 z-20">
-              <svg viewBox="0 0 120 80" class="w-full filter drop-shadow-2xl">
-                <!-- Box Body -->
-                <rect x="14" y="0" width="92" height="74" rx="6" fill="url(#giftGoldBody)" stroke="#b45309" stroke-width="1.5"/>
-                <!-- Vertical Ribbon -->
-                <rect x="52" y="0" width="16" height="74" fill="#dc2626" />
-                <rect x="57" y="0" width="6" height="74" fill="#ef4444" />
-                <!-- Gold sparkles on box surface -->
-                <circle cx="34" cy="30" r="2" fill="#ffffff" opacity="0.8" />
-                <circle cx="86" cy="46" r="2.5" fill="#ffffff" opacity="0.8" />
-                <defs>
-                  <linearGradient id="giftGoldBody" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#fef08a" />
-                    <stop offset="40%" stop-color="#f59e0b" />
-                    <stop offset="100%" stop-color="#78350f" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
     </div>
 
-    <div id="revealTarget" class="w-full max-w-md opacity-0 scale-75 pointer-events-none transition-all duration-1000 transform mt-3 flex flex-col items-center">
+    <!-- The 3D Miniature Doctor & Diorama Stage Container -->
+    <div class="diorama-stage w-full flex flex-col items-center justify-center relative">
       
-      <!-- Premium Glass Gold Card -->
-      <div class="w-full bg-gradient-to-b from-amber-500/15 via-black/80 to-amber-950/30 border-2 border-amber-400/50 rounded-3xl p-6 sm:p-7 shadow-[0_0_50px_rgba(245,158,11,0.25)] backdrop-blur-xl relative overflow-hidden">
+      <!-- Figurine + Desk Composite Illustration Stage -->
+      <div class="relative w-[310px] sm:w-[380px] max-w-full flex flex-col items-center">
         
-        <!-- Glowing Ambient Lines -->
-        <div class="absolute -top-10 -right-10 w-36 h-36 bg-amber-400/20 rounded-full blur-2xl pointer-events-none"></div>
-        <div class="absolute -bottom-10 -left-10 w-36 h-36 bg-purple-500/20 rounded-full blur-2xl pointer-events-none"></div>
+        <!-- SVG Vector Fidelity Rendition of the Miniature Doctor & Clinic Desk -->
+        <svg viewBox="0 0 420 540" class="w-full h-auto drop-shadow-[0_20px_40px_rgba(0,0,0,0.85)] filter" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Wooden Desk Material -->
+            <linearGradient id="deskWood" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#935123"/>
+              <stop offset="50%" stop-color="#6e3814"/>
+              <stop offset="100%" stop-color="#4e240b"/>
+            </linearGradient>
 
-        <div class="inline-flex items-center gap-2 text-xs font-black tracking-widest text-amber-300 uppercase px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 mb-3">
-          <span>👑</span> Official Domain Reveal <span>👑</span>
-        </div>
+            <linearGradient id="pedestalWood" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#7a3f1a"/>
+              <stop offset="100%" stop-color="#3c1a06"/>
+            </linearGradient>
 
-        <!-- 24krt.com Majestic Title -->
-        <h1 class="text-4xl sm:text-5xl font-black font-luxury gold-shimmer-text tracking-wider filter drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] py-1">
-          24krt.com
-        </h1>
+            <!-- Skin Radiance -->
+            <radialGradient id="faceSkin" cx="45%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#edd0be"/>
+              <stop offset="65%" stop-color="#dfa882"/>
+              <stop offset="100%" stop-color="#be825d"/>
+            </radialGradient>
 
-        <!-- Under Construction Subtitle -->
-        <div class="flex items-center justify-center gap-2 mt-2">
-          <span class="w-8 h-[1px] bg-gradient-to-r from-transparent to-amber-400"></span>
-          <p class="text-xs sm:text-sm font-semibold tracking-widest uppercase text-amber-200/90">
-            Crafting Perfection • Coming Soon
-          </p>
-          <span class="w-8 h-[1px] bg-gradient-to-l from-transparent to-amber-400"></span>
-        </div>
+            <!-- Purple Ikat Pattern -->
+            <pattern id="ikatPattern" width="30" height="30" patternUnits="userSpaceOnUse">
+              <rect width="30" height="30" fill="#581c87"/>
+              <path d="M 15 0 L 30 15 L 15 30 L 0 15 Z" fill="#4a1572"/>
+              <path d="M 15 4 L 26 15 L 15 26 L 4 15 Z" stroke="#ffffff" stroke-width="2" fill="none" opacity="0.9"/>
+              <circle cx="15" cy="15" r="2.5" fill="#fde047"/>
+            </pattern>
 
-        <!-- Animated Progress Strip -->
-        <div class="w-full max-w-[240px] h-2 mx-auto mt-4 rounded-full overflow-hidden bg-neutral-900 border border-amber-500/40 p-[1px]">
-          <div class="h-full rounded-full bg-gradient-to-r from-amber-600 via-amber-300 to-amber-500 animate-pulse"></div>
+            <!-- Gold Jewelry Gradient -->
+            <linearGradient id="goldJewel" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fff099"/>
+              <stop offset="50%" stop-color="#ffd700"/>
+              <stop offset="100%" stop-color="#b8860b"/>
+            </linearGradient>
+
+            <!-- Metallic Stethoscope Chrome -->
+            <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f8fafc"/>
+              <stop offset="50%" stop-color="#94a3b8"/>
+              <stop offset="100%" stop-color="#475569"/>
+            </linearGradient>
+          </defs>
+
+          <!-- 1. Mahogany Pedestal Base -->
+          <ellipse cx="210" cy="515" rx="190" ry="22" fill="#1b0e06" opacity="0.6"/>
+          <path d="M 30 500 L 390 500 L 380 522 L 40 522 Z" fill="url(#pedestalWood)"/>
+          <ellipse cx="210" cy="500" rx="180" ry="18" fill="#8f4a20"/>
+          <ellipse cx="210" cy="497" rx="174" ry="15" fill="#592b0f"/>
+
+          <!-- 2. Clinic Wooden Desk in Background -->
+          <g id="clinic-desk">
+            <!-- Left Pedestal with Drawers -->
+            <rect x="75" y="320" width="80" height="170" fill="url(#deskWood)" rx="3"/>
+            <line x1="75" y1="375" x2="155" y2="375" stroke="#381705" stroke-width="2"/>
+            <line x1="75" y1="430" x2="155" y2="430" stroke="#381705" stroke-width="2"/>
+            <!-- Drawer Knobs -->
+            <circle cx="115" cy="348" r="3.5" fill="url(#goldJewel)"/>
+            <circle cx="115" cy="402" r="3.5" fill="url(#goldJewel)"/>
+            <circle cx="115" cy="458" r="3.5" fill="url(#goldJewel)"/>
+
+            <!-- Right Pedestal with Framed Diploma -->
+            <rect x="265" y="320" width="80" height="170" fill="url(#deskWood)" rx="3"/>
+            <!-- Framed Medical Certificate of Diploma on Desk Leg -->
+            <rect x="275" y="370" width="60" height="42" fill="#fffef7" stroke="#4a240c" stroke-width="3" rx="1"/>
+            <rect x="278" y="373" width="54" height="36" fill="none" stroke="#d4af37" stroke-width="1"/>
+            <line x1="284" y1="382" x2="326" y2="382" stroke="#475569" stroke-width="2"/>
+            <line x1="284" y1="388" x2="318" y2="388" stroke="#94a3b8" stroke-width="1"/>
+            <line x1="284" y1="394" x2="322" y2="394" stroke="#94a3b8" stroke-width="1"/>
+            <circle cx="304" cy="401" r="3" fill="#dc2626"/>
+
+            <!-- Desktop Board Surface -->
+            <polygon points="50,320 370,320 385,336 35,336" fill="#a45826"/>
+            <rect x="35" y="336" width="350" height="10" fill="#4d2208" rx="2"/>
+
+            <!-- Medical Books Stack on Left of Desk -->
+            <rect x="78" y="240" width="16" height="80" fill="#1e3a8a" rx="1.5"/>
+            <rect x="96" y="246" width="16" height="74" fill="#831843" rx="1.5"/>
+            <rect x="114" y="254" width="18" height="66" fill="#166534" rx="1.5"/>
+            <rect x="134" y="270" width="16" height="50" fill="#312e81" rx="1.5"/>
+
+            <!-- Medicine Vials & Pills -->
+            <rect x="74" y="295" width="18" height="25" fill="#f59e0b" opacity="0.9" rx="3"/>
+            <rect x="73" y="291" width="20" height="5" fill="#ffffff" rx="1"/>
+            <rect x="98" y="298" width="18" height="22" fill="#f59e0b" opacity="0.9" rx="3"/>
+            <rect x="97" y="294" width="20" height="5" fill="#ffffff" rx="1"/>
+            <ellipse cx="120" cy="324" rx="4" ry="2" fill="#ef4444"/>
+            <ellipse cx="128" cy="323" rx="4" ry="2" fill="#3b82f6"/>
+
+            <!-- Silver Desk Lamp on Right -->
+            <path d="M 335 320 L 335 310 L 315 240 L 300 248" fill="none" stroke="url(#chrome)" stroke-width="4"/>
+            <path d="M 285 240 L 310 225 L 315 255 Z" fill="url(#chrome)"/>
+            <ellipse cx="295" cy="245" rx="6" ry="12" fill="#fef08a" opacity="0.8"/>
+
+            <!-- Standing Certificate Frame on Desktop Right -->
+            <polygon points="325,275 365,275 368,320 322,320" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+            <circle cx="345" cy="312" r="3" fill="#eab308"/>
+          </g>
+
+          <!-- 3. Miniature Doctor Figurine (Dr. Bhavya) -->
+          <g id="doctor-miniature">
+            <!-- Glossy Black Shoes -->
+            <ellipse cx="190" cy="502" rx="15" ry="9" fill="#0f172a"/>
+            <ellipse cx="230" cy="502" rx="15" ry="9" fill="#0f172a"/>
+
+            <!-- Purple Trousers / Salwar Legs -->
+            <path d="M 180 435 L 176 496 L 202 496 L 200 435 Z" fill="#4a1572"/>
+            <path d="M 220 435 L 218 496 L 244 496 L 240 435 Z" fill="#4a1572"/>
+
+            <!-- Beautiful Printed Ikat Kurti Body -->
+            <path d="M 160 215 C 160 215, 140 375, 150 435 L 270 435 C 280 375, 260 215, 260 215 Z" fill="url(#ikatPattern)" stroke="#3b0764" stroke-width="1.5"/>
+
+            <!-- Kurti Bottom Border Geometric Embroidery -->
+            <rect x="150" y="420" width="120" height="15" fill="#3b0764"/>
+            <line x1="150" y1="422" x2="270" y2="422" stroke="url(#goldJewel)" stroke-width="2"/>
+            <line x1="150" y1="433" x2="270" y2="433" stroke="url(#goldJewel)" stroke-width="2"/>
+
+            <!-- Kurti Sleeve Arms -->
+            <!-- Left Arm -->
+            <path d="M 165 220 L 140 280 L 138 340 L 158 340 L 165 285 L 180 230 Z" fill="url(#ikatPattern)"/>
+            <ellipse cx="148" cy="342" rx="10" ry="4" fill="#3b0764"/>
+            <line x1="138" y1="340" x2="158" y2="340" stroke="url(#goldJewel)" stroke-width="2"/>
+
+            <!-- Right Arm -->
+            <path d="M 255 220 L 280 280 L 282 340 L 262 340 L 255 285 L 240 230 Z" fill="url(#ikatPattern)"/>
+            <ellipse cx="272" cy="342" rx="10" ry="4" fill="#3b0764"/>
+            <line x1="262" y1="340" x2="282" y2="340" stroke="url(#goldJewel)" stroke-width="2"/>
+
+            <!-- Natural Hands (Posed inward to present the gift) -->
+            <ellipse cx="152" cy="358" rx="8" ry="11" fill="url(#faceSkin)"/>
+            <ellipse cx="268" cy="358" rx="8" ry="11" fill="url(#faceSkin)"/>
+
+            <!-- Purple Dupatta Scarf Folded Neatly Around Collar -->
+            <path d="M 180 205 Q 210 225 240 205 Q 255 230 235 242 Q 210 235 185 242 Q 165 230 180 205 Z" fill="#3b0764" stroke="#2e0854" stroke-width="2"/>
+
+            <!-- Delicate 24K Gold Chain & Teddy/Giraffe Pendant from Photo -->
+            <path d="M 194 212 Q 210 238 226 212" fill="none" stroke="url(#goldJewel)" stroke-width="2.5"/>
+            <!-- Pendant Charm -->
+            <circle cx="210" cy="239" r="4.5" fill="url(#goldJewel)"/>
+            <circle cx="210" cy="246" r="3.5" fill="url(#goldJewel)"/>
+            <circle cx="210" cy="246" r="1.5" fill="#3b82f6"/>
+
+            <!-- Black Doctor Stethoscope Hanging with Precision -->
+            <path d="M 184 210 Q 170 240 172 290 Q 185 305 200 292 L 202 248" fill="none" stroke="#18181b" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M 236 210 Q 250 240 248 290 Q 240 310 220 300" fill="none" stroke="#18181b" stroke-width="4.5" stroke-linecap="round"/>
+            <!-- Stethoscope Binaural Silver Neckpiece -->
+            <path d="M 186 210 Q 210 195 234 210" fill="none" stroke="url(#chrome)" stroke-width="3"/>
+            <!-- Stethoscope Chest Piece / Diaphragm -->
+            <circle cx="242" cy="298" r="10" fill="url(#chrome)"/>
+            <circle cx="242" cy="298" r="6" fill="#18181b"/>
+
+            <!-- 4. Head, Expressive Face & Wavy Dark Hair (Faithful to Photo) -->
+            <!-- Neck -->
+            <rect x="200" y="185" width="20" height="28" fill="url(#faceSkin)" rx="4"/>
+
+            <!-- Wavy Dark Hair Behind Shoulders -->
+            <path d="M 152 130 C 130 160, 130 240, 155 275 C 165 230, 160 180, 165 145 Z" fill="#181412"/>
+            <path d="M 268 130 C 290 160, 290 240, 265 275 C 255 230, 260 180, 255 145 Z" fill="#181412"/>
+
+            <!-- Facial Contours -->
+            <ellipse cx="210" cy="155" rx="34" ry="38" fill="url(#faceSkin)"/>
+            
+            <!-- Eyes (Large expressive stylized chibi doctor eyes) -->
+            <!-- Left Eye -->
+            <ellipse cx="196" cy="154" rx="7.5" ry="6" fill="#ffffff"/>
+            <ellipse cx="196" cy="154" rx="4.5" ry="4.5" fill="#351a09"/>
+            <circle cx="197.5" cy="152" r="1.8" fill="#ffffff"/>
+            <path d="M 188 152 Q 196 146 204 152" fill="none" stroke="#1a110a" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Left Eyelashes -->
+            <line x1="202" y1="149" x2="206" y2="146" stroke="#1a110a" stroke-width="1.5"/>
+
+            <!-- Right Eye -->
+            <ellipse cx="224" cy="154" rx="7.5" ry="6" fill="#ffffff"/>
+            <ellipse cx="224" cy="154" rx="4.5" ry="4.5" fill="#351a09"/>
+            <circle cx="225.5" cy="152" r="1.8" fill="#ffffff"/>
+            <path d="M 216 152 Q 224 146 232 152" fill="none" stroke="#1a110a" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Right Eyelashes -->
+            <line x1="230" y1="149" x2="234" y2="146" stroke="#1a110a" stroke-width="1.5"/>
+
+            <!-- Eyebrows (Arched Natural Dark Brows) -->
+            <path d="M 187 144 Q 196 137 205 143" fill="none" stroke="#221811" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M 215 143 Q 224 137 233 144" fill="none" stroke="#221811" stroke-width="2.6" stroke-linecap="round"/>
+
+            <!-- Red & Gold Bindi on Forehead Center -->
+            <circle cx="210" cy="142" r="2.2" fill="#dc2626"/>
+            <circle cx="210" cy="142" r="0.8" fill="url(#goldJewel)"/>
+
+            <!-- Delicate Nose -->
+            <path d="M 209 152 Q 212 163 207 166 Q 210 168 213 166" fill="none" stroke="#b27954" stroke-width="1.8" stroke-linecap="round"/>
+
+            <!-- Beautiful Warm Smile & Rose Lips -->
+            <path d="M 200 174 Q 210 183 220 174" fill="#ffffff" stroke="#c05562" stroke-width="2.8" stroke-linecap="round"/>
+            <path d="M 202 174 Q 210 181 218 174" fill="#9f1239" opacity="0.4"/>
+
+            <!-- Ear & Gold Studs -->
+            <ellipse cx="175" cy="158" rx="4" ry="6" fill="url(#faceSkin)"/>
+            <circle cx="174" cy="161" r="2.5" fill="url(#goldJewel)"/>
+            <ellipse cx="245" cy="158" rx="4" ry="6" fill="url(#faceSkin)"/>
+            <circle cx="246" cy="161" r="2.5" fill="url(#goldJewel)"/>
+
+            <!-- Center-parted Rich Wavy Black Hair (Crown and Front Lock Sculpting) -->
+            <path d="M 210 120 C 180 120, 160 145, 172 180 C 176 160, 185 142, 210 134 C 235 142, 244 160, 248 180 C 260 145, 240 120, 210 120 Z" fill="#181412"/>
+            <path d="M 210 120 Q 210 132 210 134" stroke="#090706" stroke-width="2"/> <!-- Crisp Center Parting -->
+
+            <!-- Glossy Hair Highlight Ribbons -->
+            <path d="M 188 128 Q 176 148 178 172" fill="none" stroke="#4a3b32" stroke-width="2" opacity="0.6"/>
+            <path d="M 232 128 Q 244 148 242 172" fill="none" stroke="#4a3b32" stroke-width="2" opacity="0.6"/>
+          </g>
+        </svg>
+
+        <!-- 3D Interactive Present Box Positioned in Her Hands -->
+        <div class="absolute top-[320px] sm:top-[340px] flex flex-col items-center z-30">
+          
+          <div id="giftContainer" class="relative flex items-center justify-center">
+            
+            <!-- Radiating Light Beams container -->
+            <div id="lightRays" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <!-- Dynamically generated golden light rays -->
+            </div>
+
+            <!-- The 3D CSS Gift Cube -->
+            <div id="giftCube" class="gift-cube floating-box" title="Tap to Open Present!">
+              <div class="gift-face face-front"></div>
+              <div class="gift-face face-back"></div>
+              <div class="gift-face face-right"></div>
+              <div class="gift-face face-left"></div>
+              <div class="gift-face face-top">
+                <!-- Ribbon Bow on Top -->
+                <div class="absolute w-8 h-8 rounded-full border-2 border-amber-300 bg-amber-400/80 shadow-[0_0_12px_rgba(255,215,0,0.8)] -translate-y-1"></div>
+              </div>
+              <div class="gift-face face-bottom"></div>
+            </div>
+
+            <!-- Floating Tap Me Prompt (Hides when opened) -->
+            <div id="tapMeBadge" class="absolute -top-11 px-3.5 py-1 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 text-black font-extrabold text-xs tracking-wider pulse-action uppercase shadow-xl cursor-pointer">
+              🎁 Tap to Open
+            </div>
+          </div>
         </div>
 
       </div>
@@ -385,160 +504,291 @@
 
   </main>
 
-  <footer class="w-full max-w-md flex flex-col sm:flex-row items-center justify-between text-xs text-amber-300/60 py-3 z-10 border-t border-amber-500/20 gap-2">
-    <div>Celebrate Dr. Bhavya • Oct 3</div>
-    <div class="flex items-center gap-2">
-      <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
-      <span>24krt.com</span>
+  <!-- Bottom Interaction Panel -->
+  <footer class="w-full max-w-md flex flex-col items-center gap-2.5 z-20 pb-2">
+    <div class="flex items-center gap-3">
+      <button id="btnMainAction" onclick="handlePresentClick()" class="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 text-black font-bold text-sm tracking-wide shadow-[0_0_25px_rgba(255,215,0,0.4)] hover:brightness-110 active:scale-95 transition-all flex items-center gap-2">
+        <span id="btnIcon">🎁</span>
+        <span id="btnText">Open Birthday Present</span>
+      </button>
+
+      <button id="btnReplay" onclick="resetGift()" class="hidden px-4 py-2.5 rounded-2xl bg-neutral-900/80 border border-neutral-700/80 text-amber-200 text-xs font-semibold hover:border-amber-400 transition-all flex items-center gap-1.5 active:scale-95">
+        <span>🔄</span> Replay
+      </button>
+
+      <button id="btnSoundToggle" onclick="toggleMute()" class="px-3.5 py-2.5 rounded-2xl bg-neutral-900/80 border border-neutral-700/80 text-neutral-300 text-xs hover:border-amber-400 transition-all">
+        <span id="muteIcon">🔊</span>
+      </button>
+    </div>
+
+    <!-- Security & Status Info -->
+    <div class="flex items-center gap-3 text-[11px] text-neutral-500">
+      <span>🔒 Enforced SSL (HTTPS)</span>
+      <span>•</span>
+      <span>24krt.com Hosted on GitHub Pages</span>
     </div>
   </footer>
 
-  <!-- Hidden sound synthesizers and scripts -->
+  <!-- Audio Synthesizer & Particle Systems Engine -->
   <script>
-    let audioReady = false;
-    let soundEnabled = true;
-    let chimeSynth = null;
-    let fanfareSynth = null;
+    let isOpened = false;
+    let isMuted = false;
+    let audioCtx = null;
 
-    function initAudio() {
-      if (audioReady) return;
+    // 1. Web Audio Synthesizer for High-End Birthday Chimes & Celebration Bursts
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playCelebrationFanfare() {
+      if (isMuted) return;
       try {
-        Tone.start();
-        // Soft celebratory bell chime
-        chimeSynth = new Tone.PolySynth(Tone.Synth, {
-          oscillator: { type: "triangle8" },
-          envelope: { attack: 0.02, decay: 1.2, sustain: 0.1, release: 1.5 }
-        }).toDestination();
-        chimeSynth.volume.value = -6;
+        const ctx = getAudioContext();
+        const now = ctx.currentTime;
 
-        // Triumphant Fanfare Synth
-        fanfareSynth = new Tone.PolySynth(Tone.Synth, {
-          oscillator: { type: "fatsawtooth", count: 3, spread: 20 },
-          envelope: { attack: 0.04, decay: 0.8, sustain: 0.2, release: 1.2 }
-        }).toDestination();
-        fanfareSynth.volume.value = -8;
+        // Sparkle Musical Chime Scale: C5, E5, G5, B5, C6, E6
+        const frequencies = [523.25, 659.25, 783.99, 987.77, 1046.50, 1318.51, 1567.98];
 
-        audioReady = true;
-      } catch (e) {
-        console.warn("Audio initialization postponed:", e);
-      }
-    }
+        frequencies.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
 
-    function toggleAudio() {
-      soundEnabled = !soundEnabled;
-      const icon = document.getElementById('soundIcon');
-      const text = document.getElementById('soundText');
-      if (soundEnabled) {
-        icon.textContent = '🔊';
-        text.textContent = 'Sound ON';
-        initAudio();
-      } else {
-        icon.textContent = '🔇';
-        text.textContent = 'Muted';
-      }
-    }
+          osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.1);
 
-    function playGiftOpenSound() {
-      if (!soundEnabled || !audioReady) return;
-      try {
-        const now = Tone.now();
-        // Play sparkly ascending arpeggio notes
-        chimeSynth.triggerAttackRelease(["C5", "E5"], "16n", now);
-        chimeSynth.triggerAttackRelease(["G5", "B5"], "16n", now + 0.12);
-        chimeSynth.triggerAttackRelease(["C6", "E6", "G6"], "8n", now + 0.25);
+          gain.gain.setValueAtTime(0, now + idx * 0.1);
+          gain.gain.linearRampToValueAtTime(0.28, now + idx * 0.1 + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 1.2);
 
-        // Grand final chord
-        fanfareSynth.triggerAttackRelease(["C4", "G4", "C5", "E5"], "2n", now + 0.45);
-      } catch (e) {
-        console.warn(e);
-      }
-    }
+          osc.connect(gain);
+          gain.connect(ctx.destination);
 
-    let giftOpened = false;
-
-    function triggerConfettiBurst() {
-      // Side confetti cannons
-      confetti({
-        particleCount: 70,
-        spread: 80,
-        origin: { y: 0.65, x: 0.7 },
-        colors: ['#ffd700', '#f59e0b', '#a855f7', '#ec4899', '#ffffff']
-      });
-
-      confetti({
-        particleCount: 50,
-        spread: 70,
-        origin: { y: 0.6, x: 0.3 },
-        colors: ['#ffd700', '#ffffff', '#c084fc']
-      });
-
-      // Gold Sparkle star shower
-      setTimeout(() => {
-        confetti({
-          particleCount: 90,
-          spread: 100,
-          startVelocity: 45,
-          origin: { y: 0.5, x: 0.5 },
-          shapes: ['circle'],
-          colors: ['#ffd700', '#fff9e6', '#d4af37']
+          osc.start(now + idx * 0.1);
+          osc.stop(now + idx * 0.1 + 1.3);
         });
-      }, 350);
+
+        // Warm Golden Bass Swell
+        const bassOsc = ctx.createOscillator();
+        const bassGain = ctx.createGain();
+        bassOsc.type = 'sine';
+        bassOsc.frequency.setValueAtTime(130.81, now); // C3
+        bassOsc.frequency.exponentialRampToValueAtTime(261.63, now + 0.8); // C4
+
+        bassGain.gain.setValueAtTime(0, now);
+        bassGain.gain.linearRampToValueAtTime(0.35, now + 0.2);
+        bassGain.gain.exponentialRampToValueAtTime(0.001, now + 2.5);
+
+        bassOsc.connect(bassGain);
+        bassGain.connect(ctx.destination);
+
+        bassOsc.start(now);
+        bassOsc.stop(now + 2.6);
+
+      } catch (err) {
+        console.warn('Audio playback prevented by browser policy:', err);
+      }
     }
 
-    function openGiftBox() {
-      if (giftOpened) return;
-      giftOpened = true;
-
-      // Start audio if first touch
-      initAudio();
-      playGiftOpenSound();
-
-      // UI Elements
-      const giftLid = document.getElementById('giftLid');
-      const giftBoxWrapper = document.getElementById('giftBoxWrapper');
-      const tapPrompt = document.getElementById('tapPrompt');
-      const instructionText = document.getElementById('instructionText');
-      const revealTarget = document.getElementById('revealTarget');
-      const haloBackdrop = document.getElementById('haloBackdrop');
-      const giftBoxContainer = document.getElementById('giftBoxContainer');
-
-      // 1. Remove wobbling and animate lid shooting up
-      giftBoxWrapper.classList.remove('wobble-gift');
-      giftLid.classList.add('lid-popped');
-      tapPrompt.style.opacity = '0';
-      instructionText.textContent = '✨ Surprise Unlocked! Happy Birthday Dr. Bhavya! ✨';
-      instructionText.classList.add('text-amber-300', 'font-bold');
-
-      // 2. Confetti explosion
-      triggerConfettiBurst();
-
-      // 3. Reveal 24krt.com smoothly
-      setTimeout(() => {
-        // Expand rays
-        haloBackdrop.classList.remove('opacity-0');
-        haloBackdrop.classList.add('opacity-100');
-
-        // Reveal card
-        revealTarget.classList.remove('opacity-0', 'scale-75', 'pointer-events-none');
-        revealTarget.classList.add('opacity-100', 'scale-100');
-
-        // Gently reduce gift box size to focus on 24krt.com
-        giftBoxContainer.style.transition = 'all 1s ease-in-out';
-        giftBoxContainer.style.transform = 'scale(0.85)';
-      }, 400);
+    function toggleMute() {
+      isMuted = !isMuted;
+      document.getElementById('muteIcon').textContent = isMuted ? '🔇' : '🔊';
     }
 
-    // Auto-countdown trigger: if user doesn't tap within 3.5s, unlock automatically
-    window.addEventListener('load', () => {
-      const autoTimer = setTimeout(() => {
-        if (!giftOpened) {
-          openGiftBox();
+    // 2. Build Radiant Golden Light Beams around Present
+    function initLightBeams() {
+      const container = document.getElementById('lightRays');
+      container.innerHTML = '';
+      const rayCount = 18;
+      for (let i = 0; i < rayCount; i++) {
+        const ray = document.createElement('div');
+        ray.className = 'light-beam';
+        const angle = (360 / rayCount) * i;
+        ray.style.setProperty('--angle', `${angle}deg`);
+        ray.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
+        container.appendChild(ray);
+      }
+    }
+
+    // 3. High-Performance Canvas Confetti & Golden Sparkle Particle System
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animationFrameId = null;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class ConfettiParticle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 5 + Math.random() * 11;
+        this.vx = Math.cos(angle) * velocity;
+        this.vy = Math.sin(angle) * velocity - (Math.random() * 5 + 3);
+        this.gravity = 0.22;
+        this.friction = 0.96;
+
+        this.size = Math.random() * 8 + 4;
+        this.rotation = Math.random() * 360;
+        this.rotSpeed = (Math.random() - 0.5) * 14;
+
+        // Birthday & 24K Luxury Palette (Gold, Purple, Warm Ivory, Magenta)
+        const colors = ['#ffd700', '#f59e0b', '#facc15', '#a855f7', '#ec4899', '#ffffff', '#e9d5ff'];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.alpha = 1;
+        this.decay = Math.random() * 0.008 + 0.005;
+        this.shape = Math.random() > 0.4 ? 'rect' : 'circle';
+      }
+
+      update() {
+        this.vx *= this.friction;
+        this.vy *= this.friction;
+        this.vy += this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.rotation += this.rotSpeed;
+        this.alpha -= this.decay;
+      }
+
+      draw(context) {
+        if (this.alpha <= 0) return;
+        context.save();
+        context.globalAlpha = Math.max(0, this.alpha);
+        context.translate(this.x, this.y);
+        context.rotate((this.rotation * Math.PI) / 180);
+        context.fillStyle = this.color;
+
+        if (this.shape === 'rect') {
+          context.fillRect(-this.size / 2, -this.size / 2, this.size, this.size * 0.6);
+        } else {
+          context.beginPath();
+          context.arc(0, 0, this.size * 0.45, 0, Math.PI * 2);
+          context.fill();
         }
-      }, 3500);
+        context.restore();
+      }
+    }
 
-      // Clean up timer if clicked before
-      document.body.addEventListener('click', () => clearTimeout(autoTimer), { once: true });
-      document.body.addEventListener('touchstart', () => clearTimeout(autoTimer), { once: true });
+    function spawnConfettiBlast(originX, originY) {
+      for (let i = 0; i < 180; i++) {
+        particles.push(new ConfettiParticle(originX, originY));
+      }
+      if (!animationFrameId) {
+        renderParticles();
+      }
+    }
+
+    function renderParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.update();
+        p.draw(ctx);
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+      if (particles.length > 0) {
+        animationFrameId = requestAnimationFrame(renderParticles);
+      } else {
+        animationFrameId = null;
+      }
+    }
+
+    // 4. Main Event: Present Opening Trigger
+    function handlePresentClick() {
+      if (isOpened) return;
+      isOpened = true;
+
+      // Play Sound
+      playCelebrationFanfare();
+
+      const cube = document.getElementById('giftCube');
+      const tapBadge = document.getElementById('tapMeBadge');
+      const lightRays = document.getElementById('lightRays');
+      const revealTarget = document.getElementById('revealTarget');
+      const btnMain = document.getElementById('btnMainAction');
+      const btnReplay = document.getElementById('btnReplay');
+
+      // Pop the Lid off
+      cube.classList.add('lid-open');
+      cube.classList.remove('floating-box');
+      tapBadge.style.opacity = '0';
+      tapBadge.style.pointerEvents = 'none';
+
+      // Golden Burst Light Rays
+      lightRays.parentElement.classList.add('revealed');
+
+      // Get origin position of the box on screen for particle blast
+      const rect = cube.getBoundingClientRect();
+      const originX = rect.left + rect.width / 2;
+      const originY = rect.top + rect.height / 2;
+      spawnConfettiBlast(originX, originY);
+
+      // Subsequent secondary sparkle pops
+      setTimeout(() => spawnConfettiBlast(originX - 60, originY - 40), 280);
+      setTimeout(() => spawnConfettiBlast(originX + 60, originY - 40), 550);
+
+      // Reveal 24krt.com Title
+      setTimeout(() => {
+        revealTarget.classList.add('active');
+        revealTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 400);
+
+      // Update footer controls
+      btnMain.classList.add('hidden');
+      btnReplay.classList.remove('hidden');
+    }
+
+    // 5. Replay / Reset Action
+    function resetGift() {
+      isOpened = false;
+      const cube = document.getElementById('giftCube');
+      const tapBadge = document.getElementById('tapMeBadge');
+      const lightRays = document.getElementById('lightRays');
+      const revealTarget = document.getElementById('revealTarget');
+      const btnMain = document.getElementById('btnMainAction');
+      const btnReplay = document.getElementById('btnReplay');
+
+      revealTarget.classList.remove('active');
+      cube.classList.remove('lid-open');
+      cube.classList.add('floating-box');
+      lightRays.parentElement.classList.remove('revealed');
+
+      tapBadge.style.opacity = '1';
+      tapBadge.style.pointerEvents = 'auto';
+
+      btnMain.classList.remove('hidden');
+      btnReplay.classList.add('hidden');
+    }
+
+    // Bind Direct Tap on Gift Box Cube
+    document.getElementById('giftContainer').addEventListener('click', () => {
+      handlePresentClick();
+    });
+
+    // Initialize light rays on page load
+    window.addEventListener('load', () => {
+      initLightBeams();
+
+      // Gentle auto-trigger after 3.8 seconds if user hasn't clicked yet
+      setTimeout(() => {
+        if (!isOpened) {
+          handlePresentClick();
+        }
+      }, 3800);
     });
   </script>
 </body>
