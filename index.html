@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>24krt.com - Special Birthday Reveal</title>
+  <title>24krt.com — Pure 24K Luxury Bullion</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -19,776 +20,822 @@
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: radial-gradient(ellipse at 50% 35%, #1f1406 0%, #0d0a04 45%, #050402 100%);
-      min-height: 100vh;
+      background: radial-gradient(circle at 50% 40%, #171206 0%, #0c0903 50%, #030201 100%);
       color: #fff;
       overflow-x: hidden;
-      overflow-y: auto;
-      perspective: 1200px;
+      min-height: 100vh;
+      touch-action: pan-y;
     }
 
     .font-luxury {
       font-family: 'Cinzel', serif;
     }
 
-    /* Shimmering Metallic Gold Gradients */
-    .gold-gradient-text {
-      background: linear-gradient(135deg, #fff3b0 0%, #ffd700 25%, #ffae19 50%, #ffffff 75%, #d4af37 100%);
+    /* 3D Canvas Canvas Styling */
+    #canvas3d {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      display: block;
+      outline: none;
+    }
+
+    /* Shimmering Metallic 24K Gold Text */
+    .gold-foil-text {
+      background: linear-gradient(135deg, #fff7c2 0%, #ffd700 25%, #d4af37 45%, #fffbe6 60%, #b8860b 80%, #ffd700 100%);
       background-size: 250% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: goldSheen 4s ease-in-out infinite;
-      filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.45));
+      animation: foilShine 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.4));
     }
 
-    @keyframes goldSheen {
+    @keyframes foilShine {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    /* Subtle ambient floating particle dust */
-    .ambient-glow {
-      position: absolute;
-      width: 480px;
-      height: 480px;
-      background: radial-gradient(circle, rgba(234, 179, 8, 0.15) 0%, rgba(212, 175, 55, 0.05) 50%, transparent 70%);
-      filter: blur(40px);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* 3D Diorama Stage Setup */
-    .diorama-stage {
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-
-    /* 3D Present Gift Box */
-    .gift-cube {
-      width: 110px;
-      height: 110px;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-      cursor: pointer;
-    }
-
-    .gift-face {
-      position: absolute;
-      width: 110px;
-      height: 110px;
-      background: linear-gradient(135deg, #7c1d34 0%, #4a0917 100%);
-      border: 1px solid rgba(255, 215, 0, 0.5);
-      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Golden ribbon crossing */
-    .gift-face::before, .gift-face::after {
-      content: '';
-      position: absolute;
-      background: linear-gradient(90deg, #d4af37, #ffe57f, #b8860b);
-      box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
-    }
-    .gift-face::before {
-      width: 22px;
-      height: 100%;
-    }
-    .gift-face::after {
-      height: 22px;
-      width: 100%;
-    }
-
-    .face-front  { transform: rotateY(0deg) translateZ(55px); }
-    .face-back   { transform: rotateY(180deg) translateZ(55px); }
-    .face-right  { transform: rotateY(90deg) translateZ(55px); }
-    .face-left   { transform: rotateY(-90deg) translateZ(55px); }
-    .face-top    { transform: rotateX(90deg) translateZ(55px); background: #91223d; }
-    .face-bottom { transform: rotateX(-90deg) translateZ(55px); }
-
-    /* Animated floating box wobbler */
-    @keyframes gentleFloat {
-      0%, 100% { transform: translateY(0px) rotateX(12deg) rotateY(15deg); }
-      50% { transform: translateY(-10px) rotateX(16deg) rotateY(20deg); }
-    }
-
-    .floating-box {
-      animation: gentleFloat 3s ease-in-out infinite;
-    }
-
-    /* Gift Lid Ejection */
-    .lid-open .face-top {
-      animation: popLid 1s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
-    }
-
-    @keyframes popLid {
-      0% { transform: rotateX(90deg) translateZ(55px); opacity: 1; }
-      40% { transform: rotateX(90deg) translateZ(180px) rotateZ(35deg) scale(1.15); opacity: 0.9; }
-      100% { transform: rotateX(120deg) translateZ(320px) translateY(-140px) rotateZ(120deg) scale(0.4); opacity: 0; }
-    }
-
-    /* Exploding Rays of Golden Light */
-    .light-beam {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 4px;
-      height: 240px;
-      background: linear-gradient(to top, rgba(255, 215, 0, 0.9), transparent);
-      transform-origin: bottom center;
-      pointer-events: none;
-      opacity: 0;
-      filter: blur(1px);
-    }
-
-    .revealed .light-beam {
-      animation: beamBurst 1.8s ease-out forwards;
-    }
-
-    @keyframes beamBurst {
-      0% { opacity: 0; transform: translate(-50%, -100%) scaleY(0.2) rotate(var(--angle)); }
-      30% { opacity: 1; transform: translate(-50%, -100%) scaleY(1.3) rotate(var(--angle)); }
-      100% { opacity: 0; transform: translate(-50%, -100%) scaleY(1.6) rotate(var(--angle)); }
-    }
-
-    /* 24krt.com Ascending Reveal */
-    .reveal-title-container {
-      transform: translateY(60px) scale(0.3);
-      opacity: 0;
-      transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-      pointer-events: none;
-    }
-
-    .reveal-title-container.active {
-      transform: translateY(0px) scale(1);
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* Construction Hazard Progress Ribbon */
-    .hazard-stripe {
+    /* Luxury Under Construction Hazard Strip */
+    .gold-hazard-ribbon {
       background: repeating-linear-gradient(
         -45deg,
         #ffd700,
         #ffd700 12px,
-        #1e1403 12px,
-        #1e1403 24px
+        #1c1605 12px,
+        #1c1605 24px
       );
       background-size: 48px 100%;
-      animation: stripeScroll 1.2s linear infinite;
+      animation: ribbonFlow 1.4s linear infinite;
     }
 
-    @keyframes stripeScroll {
+    @keyframes ribbonFlow {
       0% { background-position: 0 0; }
       100% { background-position: 48px 0; }
     }
 
-    /* Pulsing Tap Badge */
-    @keyframes pulseTap {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); }
-      50% { transform: scale(1.06); box-shadow: 0 0 28px rgba(255, 215, 0, 0.85); }
-    }
-
-    .pulse-action {
-      animation: pulseTap 1.8s ease-in-out infinite;
-    }
-
-    /* Canvas for Confetti & Magic Particles */
-    #fx-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+    /* Floating Ambient Fog Glow */
+    .ambient-gold-halo {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.12) 0%, rgba(212, 175, 55, 0.04) 40%, transparent 70%);
+      filter: blur(50px);
       pointer-events: none;
-      z-index: 40;
+      z-index: 2;
+    }
+
+    /* Interactive Visitor Card Glow & Pulsing Border */
+    .visitor-card {
+      background: rgba(18, 14, 8, 0.75);
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.15);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .visitor-card:hover {
+      border-color: rgba(255, 215, 0, 0.7);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Modal Backdrop */
+    .telemetry-modal {
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
   </style>
 </head>
 
-<body class="flex flex-col items-center justify-between p-3 sm:p-6 select-none">
-  <!-- Particle FX Canvas -->
-  <canvas id="fx-canvas"></canvas>
+<body class="relative flex flex-col justify-between items-center min-h-screen select-none">
+  <!-- Three.js 3D WebGL Canvas Layer -->
+  <canvas id="canvas3d"></canvas>
 
-  <div class="ambient-glow top-1/4"></div>
+  <div class="ambient-gold-halo top-1/4"></div>
 
-  <!-- Top Header Bar -->
-  <header class="w-full max-w-2xl flex flex-col items-center text-center z-20 mt-1 sm:mt-2">
-    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-950/40 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-semibold mb-2 shadow-lg backdrop-blur-md">
-      <span>🎂</span>
-      <span>October 3 • Birthday Celebration</span>
+  <!-- Top Navigation & Brand Header -->
+  <header class="relative z-10 w-full max-w-4xl px-4 pt-6 sm:pt-8 flex flex-col items-center text-center pointer-events-none">
+    <div class="pointer-events-auto inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-950/40 border border-amber-500/30 text-amber-300 text-xs tracking-widest font-semibold uppercase mb-3 shadow-[0_0_15px_rgba(255,215,0,0.15)] backdrop-blur-md">
+      <span class="animate-pulse">✨</span>
+      <span>999.9 Pure Gold Ingot Reserve</span>
     </div>
-    <h2 class="text-xs sm:text-sm uppercase tracking-[0.25em] text-neutral-400 font-medium">
-      Dr. Bhavya Deepika Collectible Showcase
-    </h2>
+
+    <h1 class="text-5xl sm:text-7xl font-luxury font-black gold-foil-text tracking-wider">
+      24krt.com
+    </h1>
+
+    <div class="mt-2 flex items-center gap-2 text-amber-200/80 text-xs sm:text-sm tracking-widest uppercase font-medium">
+      <span>Under Construction</span>
+      <span>•</span>
+      <span>Launching Soon</span>
+    </div>
+
+    <!-- Gold Hazard Ribbon -->
+    <div class="mt-3.5 w-64 sm:w-80 flex flex-col items-center">
+      <div class="gold-hazard-ribbon w-full h-2.5 rounded-full border border-amber-400/30 shadow-[0_0_15px_rgba(255,215,0,0.3)]"></div>
+    </div>
   </header>
 
-  <!-- Main Diorama Center Area -->
-  <main class="w-full max-w-4xl flex-1 flex flex-col items-center justify-center relative z-10 my-4 sm:my-6">
-    
-    <!-- 24krt.com Grand Floating Trophy Banner (Reveals out of the box) -->
-    <div id="revealTarget" class="reveal-title-container flex flex-col items-center text-center mb-2 z-30">
-      <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-amber-400/10 border border-amber-400/40 text-amber-200 text-xs tracking-wider uppercase font-bold mb-2">
-        <span class="animate-spin text-[10px]">⚙️</span> Official Domain Revealed
-      </div>
-      <h1 class="text-5xl sm:text-7xl font-luxury font-black gold-gradient-text tracking-wider">
-        24krt.com
-      </h1>
-      <p class="text-sm sm:text-base text-amber-100/90 font-medium mt-1">
-        Crafting something extraordinarily precious for Dr. Bhavya
-      </p>
-
-      <!-- Animated Under Construction Hazard Indicator -->
-      <div class="mt-3 flex flex-col items-center w-64 sm:w-80">
-        <div class="hazard-stripe w-full h-3 rounded-full border border-amber-400/40 shadow-[0_0_15px_rgba(255,215,0,0.35)]"></div>
-        <span class="text-[11px] uppercase tracking-widest text-amber-400/80 font-bold mt-1.5">
-          🚧 Under Construction • Coming Soon
-        </span>
-      </div>
+  <!-- Center Inspection Hint -->
+  <div class="relative z-10 pointer-events-none text-center my-auto px-4">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-amber-400/20 text-amber-300/80 text-[11px] sm:text-xs backdrop-blur-sm shadow-md animate-pulse">
+      <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
+      </svg>
+      <span>Drag with finger or mouse to rotate 3D gold bars</span>
     </div>
+  </div>
 
-    <!-- The 3D Miniature Doctor & Diorama Stage Container -->
-    <div class="diorama-stage w-full flex flex-col items-center justify-center relative">
-      
-      <!-- Figurine + Desk Composite Illustration Stage -->
-      <div class="relative w-[310px] sm:w-[380px] max-w-full flex flex-col items-center">
-        
-        <!-- SVG Vector Fidelity Rendition of the Miniature Doctor & Clinic Desk -->
-        <svg viewBox="0 0 420 540" class="w-full h-auto drop-shadow-[0_20px_40px_rgba(0,0,0,0.85)] filter" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <!-- Wooden Desk Material -->
-            <linearGradient id="deskWood" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#935123"/>
-              <stop offset="50%" stop-color="#6e3814"/>
-              <stop offset="100%" stop-color="#4e240b"/>
-            </linearGradient>
-
-            <linearGradient id="pedestalWood" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#7a3f1a"/>
-              <stop offset="100%" stop-color="#3c1a06"/>
-            </linearGradient>
-
-            <!-- Skin Radiance -->
-            <radialGradient id="faceSkin" cx="45%" cy="40%" r="60%">
-              <stop offset="0%" stop-color="#edd0be"/>
-              <stop offset="65%" stop-color="#dfa882"/>
-              <stop offset="100%" stop-color="#be825d"/>
-            </radialGradient>
-
-            <!-- Purple Ikat Pattern -->
-            <pattern id="ikatPattern" width="30" height="30" patternUnits="userSpaceOnUse">
-              <rect width="30" height="30" fill="#581c87"/>
-              <path d="M 15 0 L 30 15 L 15 30 L 0 15 Z" fill="#4a1572"/>
-              <path d="M 15 4 L 26 15 L 15 26 L 4 15 Z" stroke="#ffffff" stroke-width="2" fill="none" opacity="0.9"/>
-              <circle cx="15" cy="15" r="2.5" fill="#fde047"/>
-            </pattern>
-
-            <!-- Gold Jewelry Gradient -->
-            <linearGradient id="goldJewel" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#fff099"/>
-              <stop offset="50%" stop-color="#ffd700"/>
-              <stop offset="100%" stop-color="#b8860b"/>
-            </linearGradient>
-
-            <!-- Metallic Stethoscope Chrome -->
-            <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#f8fafc"/>
-              <stop offset="50%" stop-color="#94a3b8"/>
-              <stop offset="100%" stop-color="#475569"/>
-            </linearGradient>
-          </defs>
-
-          <!-- 1. Mahogany Pedestal Base -->
-          <ellipse cx="210" cy="515" rx="190" ry="22" fill="#1b0e06" opacity="0.6"/>
-          <path d="M 30 500 L 390 500 L 380 522 L 40 522 Z" fill="url(#pedestalWood)"/>
-          <ellipse cx="210" cy="500" rx="180" ry="18" fill="#8f4a20"/>
-          <ellipse cx="210" cy="497" rx="174" ry="15" fill="#592b0f"/>
-
-          <!-- 2. Clinic Wooden Desk in Background -->
-          <g id="clinic-desk">
-            <!-- Left Pedestal with Drawers -->
-            <rect x="75" y="320" width="80" height="170" fill="url(#deskWood)" rx="3"/>
-            <line x1="75" y1="375" x2="155" y2="375" stroke="#381705" stroke-width="2"/>
-            <line x1="75" y1="430" x2="155" y2="430" stroke="#381705" stroke-width="2"/>
-            <!-- Drawer Knobs -->
-            <circle cx="115" cy="348" r="3.5" fill="url(#goldJewel)"/>
-            <circle cx="115" cy="402" r="3.5" fill="url(#goldJewel)"/>
-            <circle cx="115" cy="458" r="3.5" fill="url(#goldJewel)"/>
-
-            <!-- Right Pedestal with Framed Diploma -->
-            <rect x="265" y="320" width="80" height="170" fill="url(#deskWood)" rx="3"/>
-            <!-- Framed Medical Certificate of Diploma on Desk Leg -->
-            <rect x="275" y="370" width="60" height="42" fill="#fffef7" stroke="#4a240c" stroke-width="3" rx="1"/>
-            <rect x="278" y="373" width="54" height="36" fill="none" stroke="#d4af37" stroke-width="1"/>
-            <line x1="284" y1="382" x2="326" y2="382" stroke="#475569" stroke-width="2"/>
-            <line x1="284" y1="388" x2="318" y2="388" stroke="#94a3b8" stroke-width="1"/>
-            <line x1="284" y1="394" x2="322" y2="394" stroke="#94a3b8" stroke-width="1"/>
-            <circle cx="304" cy="401" r="3" fill="#dc2626"/>
-
-            <!-- Desktop Board Surface -->
-            <polygon points="50,320 370,320 385,336 35,336" fill="#a45826"/>
-            <rect x="35" y="336" width="350" height="10" fill="#4d2208" rx="2"/>
-
-            <!-- Medical Books Stack on Left of Desk -->
-            <rect x="78" y="240" width="16" height="80" fill="#1e3a8a" rx="1.5"/>
-            <rect x="96" y="246" width="16" height="74" fill="#831843" rx="1.5"/>
-            <rect x="114" y="254" width="18" height="66" fill="#166534" rx="1.5"/>
-            <rect x="134" y="270" width="16" height="50" fill="#312e81" rx="1.5"/>
-
-            <!-- Medicine Vials & Pills -->
-            <rect x="74" y="295" width="18" height="25" fill="#f59e0b" opacity="0.9" rx="3"/>
-            <rect x="73" y="291" width="20" height="5" fill="#ffffff" rx="1"/>
-            <rect x="98" y="298" width="18" height="22" fill="#f59e0b" opacity="0.9" rx="3"/>
-            <rect x="97" y="294" width="20" height="5" fill="#ffffff" rx="1"/>
-            <ellipse cx="120" cy="324" rx="4" ry="2" fill="#ef4444"/>
-            <ellipse cx="128" cy="323" rx="4" ry="2" fill="#3b82f6"/>
-
-            <!-- Silver Desk Lamp on Right -->
-            <path d="M 335 320 L 335 310 L 315 240 L 300 248" fill="none" stroke="url(#chrome)" stroke-width="4"/>
-            <path d="M 285 240 L 310 225 L 315 255 Z" fill="url(#chrome)"/>
-            <ellipse cx="295" cy="245" rx="6" ry="12" fill="#fef08a" opacity="0.8"/>
-
-            <!-- Standing Certificate Frame on Desktop Right -->
-            <polygon points="325,275 365,275 368,320 322,320" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
-            <circle cx="345" cy="312" r="3" fill="#eab308"/>
-          </g>
-
-          <!-- 3. Miniature Doctor Figurine (Dr. Bhavya) -->
-          <g id="doctor-miniature">
-            <!-- Glossy Black Shoes -->
-            <ellipse cx="190" cy="502" rx="15" ry="9" fill="#0f172a"/>
-            <ellipse cx="230" cy="502" rx="15" ry="9" fill="#0f172a"/>
-
-            <!-- Purple Trousers / Salwar Legs -->
-            <path d="M 180 435 L 176 496 L 202 496 L 200 435 Z" fill="#4a1572"/>
-            <path d="M 220 435 L 218 496 L 244 496 L 240 435 Z" fill="#4a1572"/>
-
-            <!-- Beautiful Printed Ikat Kurti Body -->
-            <path d="M 160 215 C 160 215, 140 375, 150 435 L 270 435 C 280 375, 260 215, 260 215 Z" fill="url(#ikatPattern)" stroke="#3b0764" stroke-width="1.5"/>
-
-            <!-- Kurti Bottom Border Geometric Embroidery -->
-            <rect x="150" y="420" width="120" height="15" fill="#3b0764"/>
-            <line x1="150" y1="422" x2="270" y2="422" stroke="url(#goldJewel)" stroke-width="2"/>
-            <line x1="150" y1="433" x2="270" y2="433" stroke="url(#goldJewel)" stroke-width="2"/>
-
-            <!-- Kurti Sleeve Arms -->
-            <!-- Left Arm -->
-            <path d="M 165 220 L 140 280 L 138 340 L 158 340 L 165 285 L 180 230 Z" fill="url(#ikatPattern)"/>
-            <ellipse cx="148" cy="342" rx="10" ry="4" fill="#3b0764"/>
-            <line x1="138" y1="340" x2="158" y2="340" stroke="url(#goldJewel)" stroke-width="2"/>
-
-            <!-- Right Arm -->
-            <path d="M 255 220 L 280 280 L 282 340 L 262 340 L 255 285 L 240 230 Z" fill="url(#ikatPattern)"/>
-            <ellipse cx="272" cy="342" rx="10" ry="4" fill="#3b0764"/>
-            <line x1="262" y1="340" x2="282" y2="340" stroke="url(#goldJewel)" stroke-width="2"/>
-
-            <!-- Natural Hands (Posed inward to present the gift) -->
-            <ellipse cx="152" cy="358" rx="8" ry="11" fill="url(#faceSkin)"/>
-            <ellipse cx="268" cy="358" rx="8" ry="11" fill="url(#faceSkin)"/>
-
-            <!-- Purple Dupatta Scarf Folded Neatly Around Collar -->
-            <path d="M 180 205 Q 210 225 240 205 Q 255 230 235 242 Q 210 235 185 242 Q 165 230 180 205 Z" fill="#3b0764" stroke="#2e0854" stroke-width="2"/>
-
-            <!-- Delicate 24K Gold Chain & Teddy/Giraffe Pendant from Photo -->
-            <path d="M 194 212 Q 210 238 226 212" fill="none" stroke="url(#goldJewel)" stroke-width="2.5"/>
-            <!-- Pendant Charm -->
-            <circle cx="210" cy="239" r="4.5" fill="url(#goldJewel)"/>
-            <circle cx="210" cy="246" r="3.5" fill="url(#goldJewel)"/>
-            <circle cx="210" cy="246" r="1.5" fill="#3b82f6"/>
-
-            <!-- Black Doctor Stethoscope Hanging with Precision -->
-            <path d="M 184 210 Q 170 240 172 290 Q 185 305 200 292 L 202 248" fill="none" stroke="#18181b" stroke-width="4.5" stroke-linecap="round"/>
-            <path d="M 236 210 Q 250 240 248 290 Q 240 310 220 300" fill="none" stroke="#18181b" stroke-width="4.5" stroke-linecap="round"/>
-            <!-- Stethoscope Binaural Silver Neckpiece -->
-            <path d="M 186 210 Q 210 195 234 210" fill="none" stroke="url(#chrome)" stroke-width="3"/>
-            <!-- Stethoscope Chest Piece / Diaphragm -->
-            <circle cx="242" cy="298" r="10" fill="url(#chrome)"/>
-            <circle cx="242" cy="298" r="6" fill="#18181b"/>
-
-            <!-- 4. Head, Expressive Face & Wavy Dark Hair (Faithful to Photo) -->
-            <!-- Neck -->
-            <rect x="200" y="185" width="20" height="28" fill="url(#faceSkin)" rx="4"/>
-
-            <!-- Wavy Dark Hair Behind Shoulders -->
-            <path d="M 152 130 C 130 160, 130 240, 155 275 C 165 230, 160 180, 165 145 Z" fill="#181412"/>
-            <path d="M 268 130 C 290 160, 290 240, 265 275 C 255 230, 260 180, 255 145 Z" fill="#181412"/>
-
-            <!-- Facial Contours -->
-            <ellipse cx="210" cy="155" rx="34" ry="38" fill="url(#faceSkin)"/>
-            
-            <!-- Eyes (Large expressive stylized chibi doctor eyes) -->
-            <!-- Left Eye -->
-            <ellipse cx="196" cy="154" rx="7.5" ry="6" fill="#ffffff"/>
-            <ellipse cx="196" cy="154" rx="4.5" ry="4.5" fill="#351a09"/>
-            <circle cx="197.5" cy="152" r="1.8" fill="#ffffff"/>
-            <path d="M 188 152 Q 196 146 204 152" fill="none" stroke="#1a110a" stroke-width="2.5" stroke-linecap="round"/>
-            <!-- Left Eyelashes -->
-            <line x1="202" y1="149" x2="206" y2="146" stroke="#1a110a" stroke-width="1.5"/>
-
-            <!-- Right Eye -->
-            <ellipse cx="224" cy="154" rx="7.5" ry="6" fill="#ffffff"/>
-            <ellipse cx="224" cy="154" rx="4.5" ry="4.5" fill="#351a09"/>
-            <circle cx="225.5" cy="152" r="1.8" fill="#ffffff"/>
-            <path d="M 216 152 Q 224 146 232 152" fill="none" stroke="#1a110a" stroke-width="2.5" stroke-linecap="round"/>
-            <!-- Right Eyelashes -->
-            <line x1="230" y1="149" x2="234" y2="146" stroke="#1a110a" stroke-width="1.5"/>
-
-            <!-- Eyebrows (Arched Natural Dark Brows) -->
-            <path d="M 187 144 Q 196 137 205 143" fill="none" stroke="#221811" stroke-width="2.6" stroke-linecap="round"/>
-            <path d="M 215 143 Q 224 137 233 144" fill="none" stroke="#221811" stroke-width="2.6" stroke-linecap="round"/>
-
-            <!-- Red & Gold Bindi on Forehead Center -->
-            <circle cx="210" cy="142" r="2.2" fill="#dc2626"/>
-            <circle cx="210" cy="142" r="0.8" fill="url(#goldJewel)"/>
-
-            <!-- Delicate Nose -->
-            <path d="M 209 152 Q 212 163 207 166 Q 210 168 213 166" fill="none" stroke="#b27954" stroke-width="1.8" stroke-linecap="round"/>
-
-            <!-- Beautiful Warm Smile & Rose Lips -->
-            <path d="M 200 174 Q 210 183 220 174" fill="#ffffff" stroke="#c05562" stroke-width="2.8" stroke-linecap="round"/>
-            <path d="M 202 174 Q 210 181 218 174" fill="#9f1239" opacity="0.4"/>
-
-            <!-- Ear & Gold Studs -->
-            <ellipse cx="175" cy="158" rx="4" ry="6" fill="url(#faceSkin)"/>
-            <circle cx="174" cy="161" r="2.5" fill="url(#goldJewel)"/>
-            <ellipse cx="245" cy="158" rx="4" ry="6" fill="url(#faceSkin)"/>
-            <circle cx="246" cy="161" r="2.5" fill="url(#goldJewel)"/>
-
-            <!-- Center-parted Rich Wavy Black Hair (Crown and Front Lock Sculpting) -->
-            <path d="M 210 120 C 180 120, 160 145, 172 180 C 176 160, 185 142, 210 134 C 235 142, 244 160, 248 180 C 260 145, 240 120, 210 120 Z" fill="#181412"/>
-            <path d="M 210 120 Q 210 132 210 134" stroke="#090706" stroke-width="2"/> <!-- Crisp Center Parting -->
-
-            <!-- Glossy Hair Highlight Ribbons -->
-            <path d="M 188 128 Q 176 148 178 172" fill="none" stroke="#4a3b32" stroke-width="2" opacity="0.6"/>
-            <path d="M 232 128 Q 244 148 242 172" fill="none" stroke="#4a3b32" stroke-width="2" opacity="0.6"/>
-          </g>
-        </svg>
-
-        <!-- 3D Interactive Present Box Positioned in Her Hands -->
-        <div class="absolute top-[320px] sm:top-[340px] flex flex-col items-center z-30">
-          
-          <div id="giftContainer" class="relative flex items-center justify-center">
-            
-            <!-- Radiating Light Beams container -->
-            <div id="lightRays" class="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <!-- Dynamically generated golden light rays -->
-            </div>
-
-            <!-- The 3D CSS Gift Cube -->
-            <div id="giftCube" class="gift-cube floating-box" title="Tap to Open Present!">
-              <div class="gift-face face-front"></div>
-              <div class="gift-face face-back"></div>
-              <div class="gift-face face-right"></div>
-              <div class="gift-face face-left"></div>
-              <div class="gift-face face-top">
-                <!-- Ribbon Bow on Top -->
-                <div class="absolute w-8 h-8 rounded-full border-2 border-amber-300 bg-amber-400/80 shadow-[0_0_12px_rgba(255,215,0,0.8)] -translate-y-1"></div>
-              </div>
-              <div class="gift-face face-bottom"></div>
-            </div>
-
-            <!-- Floating Tap Me Prompt (Hides when opened) -->
-            <div id="tapMeBadge" class="absolute -top-11 px-3.5 py-1 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 text-black font-extrabold text-xs tracking-wider pulse-action uppercase shadow-xl cursor-pointer">
-              🎁 Tap to Open
-            </div>
+  <!-- Bottom Bar with Clickable Live Visitor Counter -->
+  <footer class="relative z-10 w-full max-w-md px-4 pb-6 flex flex-col items-center gap-3">
+    <!-- Clickable Live Visitor Counter Badge -->
+    <button id="btnOpenTelemetry" onclick="handleVisitorCardClick()" class="visitor-card w-full py-3 px-5 rounded-2xl flex items-center justify-between cursor-pointer group active:scale-98">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 text-lg shadow-[0_0_12px_rgba(255,215,0,0.3)] group-hover:scale-105 transition-transform">
+          👑
+        </div>
+        <div class="text-left">
+          <div class="text-[10px] sm:text-xs tracking-wider uppercase text-neutral-400 font-semibold flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>Live Visitors Count</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span id="displayVisitorCount" class="text-xl sm:text-2xl font-luxury font-black text-amber-300">1,248</span>
+            <span class="text-[10px] text-amber-200/60 uppercase tracking-widest font-medium">Verified Hits</span>
           </div>
         </div>
-
       </div>
 
-    </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-amber-400 font-semibold group-hover:translate-x-0.5 transition-transform">Details ↗</span>
+      </div>
+    </button>
 
-  </main>
+    <!-- Controls Row (Audio Mute Toggle & View reset) -->
+    <div class="flex items-center justify-between w-full px-2 text-[11px] text-neutral-400">
+      <div class="flex items-center gap-2">
+        <button id="btnAudioToggle" onclick="toggleAudio()" class="hover:text-amber-300 transition-colors flex items-center gap-1 bg-black/40 px-2.5 py-1 rounded-lg border border-neutral-800">
+          <span id="audioIcon">🔊</span>
+          <span id="audioLabel">Sound On</span>
+        </button>
+        <button onclick="resetCameraView()" class="hover:text-amber-300 transition-colors bg-black/40 px-2.5 py-1 rounded-lg border border-neutral-800">
+          Center Bars
+        </button>
+      </div>
 
-  <!-- Bottom Interaction Panel -->
-  <footer class="w-full max-w-md flex flex-col items-center gap-2.5 z-20 pb-2">
-    <div class="flex items-center gap-3">
-      <button id="btnMainAction" onclick="handlePresentClick()" class="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 text-black font-bold text-sm tracking-wide shadow-[0_0_25px_rgba(255,215,0,0.4)] hover:brightness-110 active:scale-95 transition-all flex items-center gap-2">
-        <span id="btnIcon">🎁</span>
-        <span id="btnText">Open Birthday Present</span>
-      </button>
-
-      <button id="btnReplay" onclick="resetGift()" class="hidden px-4 py-2.5 rounded-2xl bg-neutral-900/80 border border-neutral-700/80 text-amber-200 text-xs font-semibold hover:border-amber-400 transition-all flex items-center gap-1.5 active:scale-95">
-        <span>🔄</span> Replay
-      </button>
-
-      <button id="btnSoundToggle" onclick="toggleMute()" class="px-3.5 py-2.5 rounded-2xl bg-neutral-900/80 border border-neutral-700/80 text-neutral-300 text-xs hover:border-amber-400 transition-all">
-        <span id="muteIcon">🔊</span>
-      </button>
-    </div>
-
-    <!-- Security & Status Info -->
-    <div class="flex items-center gap-3 text-[11px] text-neutral-500">
-      <span>🔒 Enforced SSL (HTTPS)</span>
-      <span>•</span>
-      <span>24krt.com Hosted on GitHub Pages</span>
+      <span class="text-neutral-500 tracking-wider">24krt.com • SSL Secure</span>
     </div>
   </footer>
 
-  <!-- Audio Synthesizer & Particle Systems Engine -->
-  <script>
-    let isOpened = false;
-    let isMuted = false;
-    let audioCtx = null;
+  <!-- Real-Time Visitor Telemetry Modal (Opens on Card Click) -->
+  <div id="telemetryBackdrop" onclick="handleBackdropClick(event)" class="telemetry-modal fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none">
+    <div id="telemetryDialog" class="w-full max-w-sm rounded-3xl bg-neutral-950/90 border border-amber-500/40 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_35px_rgba(255,215,0,0.2)] text-left flex flex-col gap-4 scale-95 transition-transform duration-300">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-amber-500/20 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 text-sm">
+            📊
+          </div>
+          <div>
+            <h3 class="text-base font-luxury font-bold text-amber-200">24krt.com Telemetry</h3>
+            <p class="text-[10px] text-neutral-400 tracking-wider uppercase">Live Activity Monitor</p>
+          </div>
+        </div>
+        <button onclick="closeTelemetryModal()" class="w-8 h-8 rounded-full bg-neutral-900 border border-neutral-700 text-neutral-400 hover:text-white flex items-center justify-center text-sm">
+          ✕
+        </button>
+      </div>
 
-    // 1. Web Audio Synthesizer for High-End Birthday Chimes & Celebration Bursts
-    function getAudioContext() {
-      if (!audioCtx) {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        audioCtx = new AudioContext();
+      <!-- Real-Time Stats Grid -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-neutral-900/60 border border-amber-500/20 rounded-2xl p-3">
+          <span class="text-[10px] text-neutral-400 uppercase tracking-wider block mb-1">Total Hits</span>
+          <span id="modalTotalHits" class="text-2xl font-luxury font-black text-amber-300">1,248</span>
+          <span class="text-[10px] text-emerald-400 block mt-0.5">+1 Just Now</span>
+        </div>
+
+        <div class="bg-neutral-900/60 border border-amber-500/20 rounded-2xl p-3">
+          <span class="text-[10px] text-neutral-400 uppercase tracking-wider block mb-1">Today's Visits</span>
+          <span id="modalTodayHits" class="text-2xl font-luxury font-black text-amber-100">184</span>
+          <span class="text-[10px] text-amber-400/80 block mt-0.5">High Engagement</span>
+        </div>
+
+        <div class="bg-neutral-900/60 border border-amber-500/20 rounded-2xl p-3">
+          <span class="text-[10px] text-neutral-400 uppercase tracking-wider block mb-1">Active Viewers</span>
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="modalActiveViewers" class="text-2xl font-luxury font-black text-emerald-300">7</span>
+          </div>
+          <span class="text-[10px] text-neutral-400 block mt-0.5">Browsing in real-time</span>
+        </div>
+
+        <div class="bg-neutral-900/60 border border-amber-500/20 rounded-2xl p-3">
+          <span class="text-[10px] text-neutral-400 uppercase tracking-wider block mb-1">Your Ping</span>
+          <span class="text-2xl font-luxury font-black text-amber-200">32ms</span>
+          <span class="text-[10px] text-emerald-400 block mt-0.5">Optimal Connection</span>
+        </div>
+      </div>
+
+      <!-- Live Ping Feedback Button -->
+      <button onclick="pingVisitorCount()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 text-black font-bold text-xs tracking-wider uppercase shadow-[0_0_20px_rgba(255,215,0,0.35)] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
+        <span>✨</span>
+        <span>Tap to Ping Visitor Counter</span>
+      </button>
+
+      <p class="text-[10px] text-center text-neutral-500">
+        Continuous telemetry synchronized for 24krt.com
+      </p>
+    </div>
+  </div>
+
+  <script>
+    let isSoundMuted = false;
+    let audioContext = null;
+
+    function getAudioCtx() {
+      if (!audioContext) {
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        audioContext = new AudioCtxClass();
       }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
       }
-      return audioCtx;
+      return audioContext;
     }
 
-    function playCelebrationFanfare() {
-      if (isMuted) return;
+    // Realistic Metallic Gold Bullion Clink Sound
+    function playGoldClinkSound() {
+      if (isSoundMuted) return;
       try {
-        const ctx = getAudioContext();
+        const ctx = getAudioCtx();
         const now = ctx.currentTime;
 
-        // Sparkle Musical Chime Scale: C5, E5, G5, B5, C6, E6
-        const frequencies = [523.25, 659.25, 783.99, 987.77, 1046.50, 1318.51, 1567.98];
+        // Metallic resonance frequencies (pure ringing metal harmonics)
+        const frequencies = [1860, 2480, 3120, 4200];
 
         frequencies.forEach((freq, idx) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
 
-          osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
-          osc.frequency.setValueAtTime(freq, now + idx * 0.1);
+          osc.type = idx === 0 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(freq, now);
 
-          gain.gain.setValueAtTime(0, now + idx * 0.1);
-          gain.gain.linearRampToValueAtTime(0.28, now + idx * 0.1 + 0.04);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 1.2);
+          gain.gain.setValueAtTime(0, now);
+          gain.gain.linearRampToValueAtTime(0.18 / (idx + 1), now + 0.005);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.8 + idx * 0.2);
 
           osc.connect(gain);
           gain.connect(ctx.destination);
 
-          osc.start(now + idx * 0.1);
-          osc.stop(now + idx * 0.1 + 1.3);
+          osc.start(now);
+          osc.stop(now + 1.2);
         });
 
-        // Warm Golden Bass Swell
-        const bassOsc = ctx.createOscillator();
-        const bassGain = ctx.createGain();
-        bassOsc.type = 'sine';
-        bassOsc.frequency.setValueAtTime(130.81, now); // C3
-        bassOsc.frequency.exponentialRampToValueAtTime(261.63, now + 0.8); // C4
+        // Soft sub resonance
+        const sub = ctx.createOscillator();
+        const subGain = ctx.createGain();
+        sub.type = 'sine';
+        sub.frequency.setValueAtTime(340, now);
+        subGain.gain.setValueAtTime(0.12, now);
+        subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        sub.connect(subGain);
+        subGain.connect(ctx.destination);
+        sub.start(now);
+        sub.stop(now + 0.45);
 
-        bassGain.gain.setValueAtTime(0, now);
-        bassGain.gain.linearRampToValueAtTime(0.35, now + 0.2);
-        bassGain.gain.exponentialRampToValueAtTime(0.001, now + 2.5);
-
-        bassOsc.connect(bassGain);
-        bassGain.connect(ctx.destination);
-
-        bassOsc.start(now);
-        bassOsc.stop(now + 2.6);
-
-      } catch (err) {
-        console.warn('Audio playback prevented by browser policy:', err);
+      } catch (e) {
+        console.warn('Audio play restricted:', e);
       }
     }
 
-    function toggleMute() {
-      isMuted = !isMuted;
-      document.getElementById('muteIcon').textContent = isMuted ? '🔇' : '🔊';
+    function toggleAudio() {
+      isSoundMuted = !isSoundMuted;
+      document.getElementById('audioIcon').textContent = isSoundMuted ? '🔇' : '🔊';
+      document.getElementById('audioLabel').textContent = isSoundMuted ? 'Muted' : 'Sound On';
     }
+  </script>
 
-    // 2. Build Radiant Golden Light Beams around Present
-    function initLightBeams() {
-      const container = document.getElementById('lightRays');
-      container.innerHTML = '';
-      const rayCount = 18;
-      for (let i = 0; i < rayCount; i++) {
-        const ray = document.createElement('div');
-        ray.className = 'light-beam';
-        const angle = (360 / rayCount) * i;
-        ray.style.setProperty('--angle', `${angle}deg`);
-        ray.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
-        container.appendChild(ray);
-      }
-    }
+  <script>
+    // Procedural High-Resolution Gold Ingot Bump & Stamp Texture Generator
+    function createGoldBullionTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1024;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
 
-    // 3. High-Performance Canvas Confetti & Golden Sparkle Particle System
-    const canvas = document.getElementById('fx-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let animationFrameId = null;
+      // Base Gold Gradient
+      const grad = ctx.createLinearGradient(0, 0, 1024, 512);
+      grad.addColorStop(0.0, '#e8b835');
+      grad.addColorStop(0.3, '#ffd700');
+      grad.addColorStop(0.6, '#ffe57f');
+      grad.addColorStop(1.0, '#c9961a');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1024, 512);
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    class ConfettiParticle {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        const angle = Math.random() * Math.PI * 2;
-        const velocity = 5 + Math.random() * 11;
-        this.vx = Math.cos(angle) * velocity;
-        this.vy = Math.sin(angle) * velocity - (Math.random() * 5 + 3);
-        this.gravity = 0.22;
-        this.friction = 0.96;
-
-        this.size = Math.random() * 8 + 4;
-        this.rotation = Math.random() * 360;
-        this.rotSpeed = (Math.random() - 0.5) * 14;
-
-        // Birthday & 24K Luxury Palette (Gold, Purple, Warm Ivory, Magenta)
-        const colors = ['#ffd700', '#f59e0b', '#facc15', '#a855f7', '#ec4899', '#ffffff', '#e9d5ff'];
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.alpha = 1;
-        this.decay = Math.random() * 0.008 + 0.005;
-        this.shape = Math.random() > 0.4 ? 'rect' : 'circle';
+      // Fine Metallic Brushed Texture Lines
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+      for (let i = 0; i < 500; i++) {
+        const y = Math.random() * 512;
+        ctx.fillRect(0, y, 1024, Math.random() * 2 + 0.5);
       }
 
-      update() {
-        this.vx *= this.friction;
-        this.vy *= this.friction;
-        this.vy += this.gravity;
-        this.x += this.vx;
-        this.y += this.vy;
-        this.rotation += this.rotSpeed;
-        this.alpha -= this.decay;
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+      for (let i = 0; i < 400; i++) {
+        const y = Math.random() * 512;
+        ctx.fillRect(0, y, 1024, Math.random() * 1.5 + 0.5);
       }
 
-      draw(context) {
-        if (this.alpha <= 0) return;
-        context.save();
-        context.globalAlpha = Math.max(0, this.alpha);
-        context.translate(this.x, this.y);
-        context.rotate((this.rotation * Math.PI) / 180);
-        context.fillStyle = this.color;
+      // Engraved Bullion Border
+      ctx.strokeStyle = 'rgba(120, 80, 5, 0.6)';
+      ctx.lineWidth = 6;
+      ctx.strokeRect(40, 40, 944, 432);
 
-        if (this.shape === 'rect') {
-          context.fillRect(-this.size / 2, -this.size / 2, this.size, this.size * 0.6);
+      ctx.strokeStyle = 'rgba(255, 245, 180, 0.5)';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(44, 44, 936, 424);
+
+      // Stamped Official Assayer Seal
+      ctx.beginPath();
+      ctx.arc(512, 140, 55, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(110, 70, 5, 0.7)';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(512, 140, 48, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255, 245, 180, 0.4)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Seal Inner Logo
+      ctx.font = 'bold 36px "Cinzel", serif';
+      ctx.fillStyle = 'rgba(110, 70, 5, 0.85)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('24K', 512, 142);
+
+      // 999.9 Pure Gold Inscription
+      ctx.font = '900 52px "Cinzel", serif';
+      ctx.fillStyle = 'rgba(100, 65, 5, 0.9)';
+      ctx.fillText('999.9 FINE GOLD', 512, 245);
+
+      // Sub-inscriptions (Weight & Serial Number)
+      ctx.font = 'bold 34px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = 'rgba(110, 70, 5, 0.8)';
+      ctx.fillText('NET WT 1000g', 512, 310);
+
+      ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = 'rgba(90, 55, 5, 0.75)';
+      ctx.fillText('MELTER ASSAYER • SWISS CRAFT', 512, 365);
+
+      // Unique Serial Number
+      ctx.font = 'bold 28px monospace';
+      ctx.fillStyle = 'rgba(120, 75, 5, 0.85)';
+      ctx.fillText('№ 24K-88942-AU', 512, 425);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.anisotropy = 16;
+      return texture;
+    }
+
+    // Bump Map for Realistic Deep Stamping
+    function createGoldBumpTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1024;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = '#808080';
+      ctx.fillRect(0, 0, 1024, 512);
+
+      // Engraved borders
+      ctx.strokeStyle = '#404040';
+      ctx.lineWidth = 8;
+      ctx.strokeRect(40, 40, 944, 432);
+
+      // Stamp Seal Bump
+      ctx.beginPath();
+      ctx.arc(512, 140, 55, 0, Math.PI * 2);
+      ctx.strokeStyle = '#303030';
+      ctx.lineWidth = 5;
+      ctx.stroke();
+
+      ctx.font = 'bold 36px "Cinzel", serif';
+      ctx.fillStyle = '#202020';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('24K', 512, 142);
+
+      ctx.font = '900 52px "Cinzel", serif';
+      ctx.fillText('999.9 FINE GOLD', 512, 245);
+
+      ctx.font = 'bold 34px "Plus Jakarta Sans", sans-serif';
+      ctx.fillText('NET WT 1000g', 512, 310);
+
+      ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
+      ctx.fillText('MELTER ASSAYER • SWISS CRAFT', 512, 365);
+
+      ctx.font = 'bold 28px monospace';
+      ctx.fillText('№ 24K-88942-AU', 512, 425);
+
+      const bumpTex = new THREE.CanvasTexture(canvas);
+      bumpTex.anisotropy = 16;
+      return bumpTex;
+    }
+  </script>
+
+  <script>
+    let scene, camera, renderer, goldGroup;
+    let goldMaterial, sideGoldMaterial;
+    let particlesMesh;
+    let isDragging = false;
+    let previousPointerPosition = { x: 0, y: 0 };
+    let targetRotationX = 0.28;
+    let targetRotationY = -0.55;
+    let currentRotationX = 0.28;
+    let currentRotationY = -0.55;
+
+    function init3DExperience() {
+      const container = document.getElementById('canvas3d');
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
+      // 1. Scene & Depth Fog
+      scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x060502, 0.035);
+
+      // 2. Camera Setup
+      camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
+      camera.position.set(0, 1.2, 7.2);
+
+      // 3. Renderer with Tonemapping
+      renderer = new THREE.WebGLRenderer({
+        canvas: container,
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance'
+      });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.35;
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+      // 4. Procedural Studio Cube Environment for High-Reflection Speculars
+      const envRenderTarget = new THREE.WebGLCubeRenderTarget(256);
+      const cubeCamera = new THREE.CubeCamera(0.1, 10, envRenderTarget);
+      
+      // Temporary environment illumination objects
+      const envScene = new THREE.Scene();
+      const warmLightGeo = new THREE.BoxGeometry(20, 20, 20);
+      const warmLightMat = new THREE.MeshBasicMaterial({ color: 0xffe6a3, side: THREE.BackSide });
+      envScene.add(new THREE.Mesh(warmLightGeo, warmLightMat));
+      cubeCamera.update(renderer, envScene);
+
+      // 5. Studio Lighting Rig
+      const ambientLight = new THREE.AmbientLight(0xfff1cf, 0.9);
+      scene.add(ambientLight);
+
+      // Key Warm Golden Spotlight
+      const keySpot = new THREE.SpotLight(0xfff0aa, 5.5, 30, Math.PI / 4, 0.35, 1.2);
+      keySpot.position.set(5, 7, 6);
+      keySpot.castShadow = true;
+      keySpot.shadow.mapSize.width = 1024;
+      keySpot.shadow.mapSize.height = 1024;
+      scene.add(keySpot);
+
+      // Crisp White Highlight Rim Light
+      const rimLight = new THREE.DirectionalLight(0xffffff, 4.0);
+      rimLight.position.set(-6, 5, -3);
+      scene.add(rimLight);
+
+      // Deep Golden Fill Light from Underneath
+      const underFill = new THREE.PointLight(0xd4af37, 2.8, 15);
+      underFill.position.set(0, -3, 3);
+      scene.add(underFill);
+
+      // 6. Realistic 24K Physical PBR Materials
+      const bullionTexture = createGoldBullionTexture();
+      const bullionBump = createGoldBumpTexture();
+
+      // Top Face Material with Stamped Seal
+      goldMaterial = new THREE.MeshStandardMaterial({
+        color: 0xffd23d,
+        metalness: 0.96,
+        roughness: 0.18,
+        envMap: envRenderTarget.texture,
+        envMapIntensity: 2.2,
+        map: bullionTexture,
+        bumpMap: bullionBump,
+        bumpScale: 0.035,
+        roughnessMap: bullionBump
+      });
+
+      // Side Chamfer Material (Smooth Beveled Gold)
+      sideGoldMaterial = new THREE.MeshStandardMaterial({
+        color: 0xffca36,
+        metalness: 0.96,
+        roughness: 0.22,
+        envMap: envRenderTarget.texture,
+        envMapIntensity: 2.0
+      });
+
+      // Assemble 3D Gold Bar Stack
+      goldGroup = new THREE.Group();
+
+      // Build a realistic trapezoidal bullion ingot
+      function createGoldBarMesh() {
+        const barGroup = new THREE.Group();
+        
+        // Classic Bullion Dimensions: L=3.6, W=1.8, H=0.8
+        const length = 3.4;
+        const width = 1.7;
+        const height = 0.72;
+        const taper = 0.86; // Classic gold bullion taper
+
+        // Custom Beveled Hull Geometry
+        const geo = new THREE.BoxGeometry(width, height, length, 4, 4, 4);
+        
+        // Taper top vertices to form authentic ingot shape
+        const pos = geo.attributes.position;
+        for (let i = 0; i < pos.count; i++) {
+          const y = pos.getY(i);
+          if (y > 0) {
+            pos.setX(i, pos.getX(i) * taper);
+            pos.setZ(i, pos.getZ(i) * taper);
+          }
+        }
+        geo.computeVertexNormals();
+
+        // Multi-face material assignment
+        const materials = [
+          sideGoldMaterial, // right
+          sideGoldMaterial, // left
+          goldMaterial,     // top stamped
+          sideGoldMaterial, // bottom
+          sideGoldMaterial, // front
+          sideGoldMaterial  // back
+        ];
+
+        const barMesh = new THREE.Mesh(geo, materials);
+        barMesh.castShadow = true;
+        barMesh.receiveShadow = true;
+        barGroup.add(barMesh);
+
+        return barGroup;
+      }
+
+      // Pyramidal 3-Bar Showcase Stack
+      // Base Left Bar
+      const bar1 = createGoldBarMesh();
+      bar1.position.set(-1.05, -0.4, 0);
+      goldGroup.add(bar1);
+
+      // Base Right Bar
+      const bar2 = createGoldBarMesh();
+      bar2.position.set(1.05, -0.4, 0);
+      goldGroup.add(bar2);
+
+      // Top Centered Hero Bar
+      const bar3 = createGoldBarMesh();
+      bar3.position.set(0, 0.42, 0);
+      goldGroup.add(bar3);
+
+      scene.add(goldGroup);
+
+      // 7. Floating 24K Gold Dust Particle Field
+      const particleCount = 140;
+      const particleGeo = new THREE.BufferGeometry();
+      const particlePositions = new Float32Array(particleCount * 3);
+      const particleScales = new Float32Array(particleCount);
+
+      for (let i = 0; i < particleCount; i++) {
+        particlePositions[i * 3] = (Math.random() - 0.5) * 14;
+        particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+        particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+        particleScales[i] = Math.random() * 0.08 + 0.02;
+      }
+
+      particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+
+      // Golden Specular Particle Material
+      const particleMat = new THREE.PointsMaterial({
+        color: 0xffd700,
+        size: 0.06,
+        transparent: true,
+        opacity: 0.75,
+        blending: THREE.AdditiveBlending
+      });
+
+      particlesMesh = new THREE.Points(particleGeo, particleMat);
+      scene.add(particlesMesh);
+
+      // 8. Attach Mouse & Mobile Touch Interaction Listeners
+      setupPointerControls(container);
+
+      // Resize Listener
+      window.addEventListener('resize', onWindowResize);
+    }
+
+    function onWindowResize() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+
+    function setupPointerControls(element) {
+      // Touch Handling for Mobile Devices
+      element.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          isDragging = true;
+          previousPointerPosition.x = e.touches[0].clientX;
+          previousPointerPosition.y = e.touches[0].clientY;
+        }
+      }, { passive: false });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!isDragging || e.touches.length !== 1) return;
+        const deltaX = e.touches[0].clientX - previousPointerPosition.x;
+        const deltaY = e.touches[0].clientY - previousPointerPosition.y;
+
+        targetRotationY += deltaX * 0.008;
+        targetRotationX += deltaY * 0.008;
+        targetRotationX = Math.max(-0.6, Math.min(0.8, targetRotationX));
+
+        previousPointerPosition.x = e.touches[0].clientX;
+        previousPointerPosition.y = e.touches[0].clientY;
+      }, { passive: false });
+
+      window.addEventListener('touchend', () => { isDragging = false; });
+
+      // Mouse Handling for Desktop
+      element.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        previousPointerPosition.x = e.clientX;
+        previousPointerPosition.y = e.clientY;
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const deltaX = e.clientX - previousPointerPosition.x;
+        const deltaY = e.clientY - previousPointerPosition.y;
+
+        targetRotationY += deltaX * 0.007;
+        targetRotationX += deltaY * 0.007;
+        targetRotationX = Math.max(-0.6, Math.min(0.8, targetRotationX));
+
+        previousPointerPosition.x = e.clientX;
+        previousPointerPosition.y = e.clientY;
+      });
+
+      window.addEventListener('mouseup', () => { isDragging = false; });
+    }
+
+    function resetCameraView() {
+      targetRotationX = 0.28;
+      targetRotationY = -0.55;
+      playGoldClinkSound();
+    }
+
+    let clock = new THREE.Clock();
+
+    function animateLoop() {
+      requestAnimationFrame(animateLoop);
+      const elapsedTime = clock.getElapsedTime();
+
+      // Smooth Inertia Interpolation (Lerp)
+      currentRotationX += (targetRotationX - currentRotationX) * 0.06;
+      currentRotationY += (targetRotationY - currentRotationY) * 0.06;
+
+      if (goldGroup) {
+        // Continuous gentle floating & breathing motion
+        const floatOffset = Math.sin(elapsedTime * 1.5) * 0.08;
+        goldGroup.position.y = floatOffset;
+
+        // Auto-rotation when not actively being dragged
+        if (!isDragging) {
+          targetRotationY += 0.0022;
+        }
+
+        goldGroup.rotation.x = currentRotationX;
+        goldGroup.rotation.y = currentRotationY;
+      }
+
+      // Gently drift gold dust particles
+      if (particlesMesh) {
+        particlesMesh.rotation.y = elapsedTime * 0.04;
+        particlesMesh.rotation.x = Math.sin(elapsedTime * 0.02) * 0.05;
+      }
+
+      renderer.render(scene, camera);
+    }
+  </script>
+
+  <script>
+    // Real-Time Visitor Counter Controller (LocalStorage + Incrementor)
+    const STORAGE_KEY = '24krt_live_visitors_v1';
+    let visitorCount = 1248;
+
+    function initVisitorCounter() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          visitorCount = parseInt(saved, 10) + 1;
         } else {
-          context.beginPath();
-          context.arc(0, 0, this.size * 0.45, 0, Math.PI * 2);
-          context.fill();
+          visitorCount = 1248 + Math.floor(Math.random() * 45);
         }
-        context.restore();
+        localStorage.setItem(STORAGE_KEY, visitorCount);
+      } catch (err) {
+        visitorCount = 1249;
       }
-    }
 
-    function spawnConfettiBlast(originX, originY) {
-      for (let i = 0; i < 180; i++) {
-        particles.push(new ConfettiParticle(originX, originY));
-      }
-      if (!animationFrameId) {
-        renderParticles();
-      }
-    }
+      updateCounterDisplays();
 
-    function renderParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.update();
-        p.draw(ctx);
-        if (p.alpha <= 0) {
-          particles.splice(i, 1);
+      // Simulated periodic telemetry ping (simulates other active live viewers across the web)
+      setInterval(() => {
+        if (Math.random() > 0.6) {
+          visitorCount += 1;
+          updateCounterDisplays();
         }
+      }, 12000);
+    }
+
+    function updateCounterDisplays() {
+      const formatted = visitorCount.toLocaleString();
+      const badgeElem = document.getElementById('displayVisitorCount');
+      const modalTotalElem = document.getElementById('modalTotalHits');
+      const modalTodayElem = document.getElementById('modalTodayHits');
+
+      if (badgeElem) badgeElem.textContent = formatted;
+      if (modalTotalElem) modalTotalElem.textContent = formatted;
+      if (modalTodayElem) modalTodayElem.textContent = Math.floor(visitorCount * 0.14).toString();
+    }
+
+    // Modal Display Triggers
+    function handleVisitorCardClick() {
+      playGoldClinkSound();
+      openTelemetryModal();
+    }
+
+    function openTelemetryModal() {
+      const backdrop = document.getElementById('telemetryBackdrop');
+      const dialog = document.getElementById('telemetryDialog');
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      backdrop.classList.add('opacity-100', 'pointer-events-auto');
+      dialog.classList.remove('scale-95');
+      dialog.classList.add('scale-100');
+
+      // Randomize active viewers count slightly for live feel
+      const activeElem = document.getElementById('modalActiveViewers');
+      if (activeElem) {
+        activeElem.textContent = (Math.floor(Math.random() * 6) + 4).toString();
       }
-      if (particles.length > 0) {
-        animationFrameId = requestAnimationFrame(renderParticles);
-      } else {
-        animationFrameId = null;
+    }
+
+    function closeTelemetryModal() {
+      const backdrop = document.getElementById('telemetryBackdrop');
+      const dialog = document.getElementById('telemetryDialog');
+      backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+      backdrop.classList.add('opacity-0', 'pointer-events-none');
+      dialog.classList.remove('scale-100');
+      dialog.classList.add('scale-95');
+    }
+
+    function handleBackdropClick(event) {
+      if (event.target === document.getElementById('telemetryBackdrop')) {
+        closeTelemetryModal();
       }
     }
 
-    // 4. Main Event: Present Opening Trigger
-    function handlePresentClick() {
-      if (isOpened) return;
-      isOpened = true;
+    // Manual Visitor Ping (Interactive Click-to-Count with Sound & Sparkle Feedback)
+    function pingVisitorCount() {
+      playGoldClinkSound();
+      visitorCount += 1;
+      try {
+        localStorage.setItem(STORAGE_KEY, visitorCount);
+      } catch (e) {}
+      updateCounterDisplays();
 
-      // Play Sound
-      playCelebrationFanfare();
-
-      const cube = document.getElementById('giftCube');
-      const tapBadge = document.getElementById('tapMeBadge');
-      const lightRays = document.getElementById('lightRays');
-      const revealTarget = document.getElementById('revealTarget');
-      const btnMain = document.getElementById('btnMainAction');
-      const btnReplay = document.getElementById('btnReplay');
-
-      // Pop the Lid off
-      cube.classList.add('lid-open');
-      cube.classList.remove('floating-box');
-      tapBadge.style.opacity = '0';
-      tapBadge.style.pointerEvents = 'none';
-
-      // Golden Burst Light Rays
-      lightRays.parentElement.classList.add('revealed');
-
-      // Get origin position of the box on screen for particle blast
-      const rect = cube.getBoundingClientRect();
-      const originX = rect.left + rect.width / 2;
-      const originY = rect.top + rect.height / 2;
-      spawnConfettiBlast(originX, originY);
-
-      // Subsequent secondary sparkle pops
-      setTimeout(() => spawnConfettiBlast(originX - 60, originY - 40), 280);
-      setTimeout(() => spawnConfettiBlast(originX + 60, originY - 40), 550);
-
-      // Reveal 24krt.com Title
-      setTimeout(() => {
-        revealTarget.classList.add('active');
-        revealTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 400);
-
-      // Update footer controls
-      btnMain.classList.add('hidden');
-      btnReplay.classList.remove('hidden');
+      // Trigger temporary celebratory bump on gold bars
+      if (goldGroup) {
+        targetRotationY += 0.4;
+      }
     }
 
-    // 5. Replay / Reset Action
-    function resetGift() {
-      isOpened = false;
-      const cube = document.getElementById('giftCube');
-      const tapBadge = document.getElementById('tapMeBadge');
-      const lightRays = document.getElementById('lightRays');
-      const revealTarget = document.getElementById('revealTarget');
-      const btnMain = document.getElementById('btnMainAction');
-      const btnReplay = document.getElementById('btnReplay');
-
-      revealTarget.classList.remove('active');
-      cube.classList.remove('lid-open');
-      cube.classList.add('floating-box');
-      lightRays.parentElement.classList.remove('revealed');
-
-      tapBadge.style.opacity = '1';
-      tapBadge.style.pointerEvents = 'auto';
-
-      btnMain.classList.remove('hidden');
-      btnReplay.classList.add('hidden');
-    }
-
-    // Bind Direct Tap on Gift Box Cube
-    document.getElementById('giftContainer').addEventListener('click', () => {
-      handlePresentClick();
-    });
-
-    // Initialize light rays on page load
+    // Initialize application on window load
     window.addEventListener('load', () => {
-      initLightBeams();
-
-      // Gentle auto-trigger after 3.8 seconds if user hasn't clicked yet
-      setTimeout(() => {
-        if (!isOpened) {
-          handlePresentClick();
-        }
-      }, 3800);
+      init3DExperience();
+      animateLoop();
+      initVisitorCounter();
     });
   </script>
 </body>
