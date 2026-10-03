@@ -2,841 +2,168 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>24krt.com — Pure 24K Luxury Bullion</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>24krt.com - Under Construction</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
     }
-
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: radial-gradient(circle at 50% 40%, #171206 0%, #0c0903 50%, #030201 100%);
-      color: #fff;
-      overflow-x: hidden;
+      background: radial-gradient(circle at center, #1a1600 0%, #080808 100%);
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       min-height: 100vh;
-      touch-action: pan-y;
+      text-align: center;
+      padding: 24px;
+      overflow: hidden;
     }
 
-    .font-luxury {
-      font-family: 'Cinzel', serif;
+    /* Glowing Construction Badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 215, 0, 0.1);
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      color: #ffd700;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
     }
 
-    /* 3D Canvas Canvas Styling */
-    #canvas3d {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      display: block;
-      outline: none;
+    .badge span {
+      display: inline-block;
+      animation: spin 3s linear infinite;
     }
 
-    /* Shimmering Metallic 24K Gold Text */
-    .gold-foil-text {
-      background: linear-gradient(135deg, #fff7c2 0%, #ffd700 25%, #d4af37 45%, #fffbe6 60%, #b8860b 80%, #ffd700 100%);
-      background-size: 250% auto;
+    /* Animated Gold Domain Title */
+    .domain-title {
+      font-size: clamp(38px, 8vw, 64px);
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(120deg, #ffd700 0%, #fff3a8 30%, #d4af37 60%, #fff 80%, #ffd700 100%);
+      background-size: 200% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: foilShine 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.4));
+      animation: shine 3s linear infinite;
+      margin-bottom: 12px;
     }
 
-    @keyframes foilShine {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    /* Subtitle */
+    .subtitle {
+      font-size: clamp(16px, 3.5vw, 22px);
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      color: #e2e8f0;
+      margin-bottom: 14px;
+      text-transform: uppercase;
     }
 
-    /* Luxury Under Construction Hazard Strip */
-    .gold-hazard-ribbon {
+    .description {
+      color: #94a3b8;
+      font-size: 15px;
+      max-width: 440px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    /* Moving Hazard Striped Bar */
+    .hazard-bar {
+      width: 280px;
+      max-width: 85%;
+      height: 12px;
+      border-radius: 12px;
       background: repeating-linear-gradient(
         -45deg,
         #ffd700,
-        #ffd700 12px,
-        #1c1605 12px,
-        #1c1605 24px
+        #ffd700 14px,
+        #222222 14px,
+        #222222 28px
       );
-      background-size: 48px 100%;
-      animation: ribbonFlow 1.4s linear infinite;
+      background-size: 56px 12px;
+      animation: slideStripes 1.2s linear infinite;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.35);
+      margin-bottom: 36px;
     }
 
-    @keyframes ribbonFlow {
+    /* Real-Time Live Views Container */
+    .views-card {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      background: rgba(20, 20, 20, 0.85);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 16px;
+      padding: 12px 24px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .views-label {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .views-badge img {
+      display: block;
+      height: 24px;
+      border-radius: 4px;
+    }
+
+    /* Animations */
+    @keyframes shine {
+      to { background-position: 200% center; }
+    }
+    @keyframes slideStripes {
       0% { background-position: 0 0; }
-      100% { background-position: 48px 0; }
+      100% { background-position: 56px 0; }
     }
-
-    /* Floating Ambient Fog Glow */
-    .ambient-gold-halo {
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 215, 0, 0.12) 0%, rgba(212, 175, 55, 0.04) 40%, transparent 70%);
-      filter: blur(50px);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    /* Interactive Visitor Card Glow & Pulsing Border */
-    .visitor-card {
-      background: rgba(18, 14, 8, 0.75);
-      border: 1px solid rgba(255, 215, 0, 0.35);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.15);
-      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-
-    .visitor-card:hover {
-      border-color: rgba(255, 215, 0, 0.7);
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.3);
-      transform: translateY(-2px);
-    }
-
-    /* Modal Backdrop */
-    .telemetry-modal {
-      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
-
-<body class="relative flex flex-col justify-between items-center min-h-screen select-none">
-  <!-- Three.js 3D WebGL Canvas Layer -->
-  <canvas id="canvas3d"></canvas>
-
-  <div class="ambient-gold-halo top-1/4"></div>
-
-  <!-- Top Navigation & Brand Header -->
-  <header class="relative z-10 w-full max-w-4xl px-4 pt-6 sm:pt-8 flex flex-col items-center text-center pointer-events-none">
-    <div class="pointer-events-auto inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-950/40 border border-amber-500/30 text-amber-300 text-xs tracking-widest font-semibold uppercase mb-3 shadow-[0_0_15px_rgba(255,215,0,0.15)] backdrop-blur-md">
-      <span class="animate-pulse">✨</span>
-      <span>999.9 Pure Gold Ingot Reserve</span>
-    </div>
-
-    <h1 class="text-5xl sm:text-7xl font-luxury font-black gold-foil-text tracking-wider">
-      24krt.com
-    </h1>
-
-    <div class="mt-2 flex items-center gap-2 text-amber-200/80 text-xs sm:text-sm tracking-widest uppercase font-medium">
-      <span>Under Construction</span>
-      <span>•</span>
-      <span>Launching Soon</span>
-    </div>
-
-    <!-- Gold Hazard Ribbon -->
-    <div class="mt-3.5 w-64 sm:w-80 flex flex-col items-center">
-      <div class="gold-hazard-ribbon w-full h-2.5 rounded-full border border-amber-400/30 shadow-[0_0_15px_rgba(255,215,0,0.3)]"></div>
-    </div>
-  </header>
-
-  <!-- Center Inspection Hint -->
-  <div class="relative z-10 pointer-events-none text-center my-auto px-4">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-amber-400/20 text-amber-300/80 text-[11px] sm:text-xs backdrop-blur-sm shadow-md animate-pulse">
-      <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
-      </svg>
-      <span>Drag with finger or mouse to rotate 3D gold bars</span>
-    </div>
+<body>
+  <div class="badge">
+    <span>⚙️</span> Under Construction
   </div>
 
-  <!-- Bottom Bar with Clickable Live Visitor Counter -->
-  <footer class="relative z-10 w-full max-w-md px-4 pb-6 flex flex-col items-center gap-3">
-    <!-- Clickable Live Visitor Counter Badge -->
-    <button id="btnOpenTelemetry" onclick="handleVisitorCardClick()" class="visitor-card w-full py-3 px-5 rounded-2xl flex items-center justify-between cursor-pointer group active:scale-98">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 text-lg shadow-[0_0_12px_rgba(255,215,0,0.3)] group-hover:scale-105 transition-transform">
-          👑
-        </div>
-        <div class="text-left">
-          <div class="text-[10px] sm:text-xs tracking-wider uppercase text-neutral-400 font-semibold flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span>Live Visitors Count</span>
-          </div>
-          <div class="flex items-baseline gap-2">
-            <span id="displayVisitorCount" class="text-xl sm:text-2xl font-luxury font-black text-amber-300">1,248</span>
-            <span class="text-[10px] text-amber-200/60 uppercase tracking-widest font-medium">Verified Hits</span>
-          </div>
-        </div>
-      </div>
+  <h1 class="domain-title">24krt.com</h1>
 
-      <div class="flex items-center gap-2">
-        <span class="text-xs text-amber-400 font-semibold group-hover:translate-x-0.5 transition-transform">Details ↗</span>
-      </div>
-    </button>
+  <div class="subtitle">Something exciting is coming soon</div>
 
-    <!-- Controls Row (Audio Mute Toggle & View reset) -->
-    <div class="flex items-center justify-between w-full px-2 text-[11px] text-neutral-400">
-      <div class="flex items-center gap-2">
-        <button id="btnAudioToggle" onclick="toggleAudio()" class="hover:text-amber-300 transition-colors flex items-center gap-1 bg-black/40 px-2.5 py-1 rounded-lg border border-neutral-800">
-          <span id="audioIcon">🔊</span>
-          <span id="audioLabel">Sound On</span>
-        </button>
-        <button onclick="resetCameraView()" class="hover:text-amber-300 transition-colors bg-black/40 px-2.5 py-1 rounded-lg border border-neutral-800">
-          Center Bars
-        </button>
-      </div>
+  <p class="description">
+    We are currently crafting a brand-new experience. Stay tuned for the launch!
+  </p>
 
-      <span class="text-neutral-500 tracking-wider">24krt.com • SSL Secure</span>
+  <div class="hazard-bar"></div>
+
+  <!-- Real-Time Live Views Counter -->
+  <div class="views-card">
+    <div class="views-label">
+      <span>👁️</span> Total Visitors
     </div>
-  </footer>
-
-  <!-- Real-Time Visitor Telemetry Modal (Opens on Card Click) -->
-  <div id="telemetryBackdrop" onclick="handleBackdropClick(event)" class="telemetry-modal fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none">
-    <div id="telemetryDialog" class="w-full max-w-sm rounded-3xl bg-neutral-950/90 border border-amber-500/40 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_35px_rgba(255,215,0,0.2)] text-left flex flex-col gap-4 scale-95 transition-transform duration-300">
-      
-      <!-- Modal Header -->
-      <div class="flex items-center justify-between border-b border-amber-500/20 pb-3">
-        <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 text-sm">
-            📊
-          </div>
-          <div>
-            <h3 class="text-base font-luxury font-bold text-amber-200">24krt.com Telemetry</h3>
-            <p class="text-[10px] text-neutral-400 tracking-wider uppercase">Live Activity Monitor</p>
-          </div>
-        </div>
-        <button onclick="closeTelemetryModal()" class="w-8 h-8 rounded-full bg-neutral-900 border border-neutral-700 text-neutral-400 hover:text-white flex items-center justify-center text-sm">
-          ✕
-        </button>
-      </div>
-
-      <!-- Real-Time Stats Grid -->
-      <div class="grid grid-cols-2 gap-3">
-        <div class="bg-neutral-900/60 border border-amber-500/20 rounded-2xl p-3">
-          <span class="text-[10px] text-neutral-400 uppercase tracking-wider block mb-1">Total Hits</span>
-          <span id="modalTotalHits" class="text-2xl font-luxury font-black text-amber-300">1,248</span>
-          <span class="text-[10px] text-emerald-400 block mt-0.5">+1 Just Now</span>
-        </div>
-
-        <div class="bg-neutral-900/60 border border-amber-500/20 rounded-2xl p-3">
-          <span class="text-[10px] text-neutral-400 uppercase tracking-wider block mb-1">Today's Visits</span>
-          <span id="modalTodayHits" class="text-2xl font-luxury font-black text-amber-100">184</span>
-          <span class="text-[10px] text-amber-400/80 block mt-0.5">High Engagement</span>
-        </div>
-
-        <div class="bg-neutral-900/60 border border-amber-500/20 rounded-2xl p-3">
-          <span class="text-[10px] text-neutral-400 uppercase tracking-wider block mb-1">Active Viewers</span>
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span id="modalActiveViewers" class="text-2xl font-luxury font-black text-emerald-300">7</span>
-          </div>
-          <span class="text-[10px] text-neutral-400 block mt-0.5">Browsing in real-time</span>
-        </div>
-
-        <div class="bg-neutral-900/60 border border-amber-500/20 rounded-2xl p-3">
-          <span class="text-[10px] text-neutral-400 uppercase tracking-wider block mb-1">Your Ping</span>
-          <span class="text-2xl font-luxury font-black text-amber-200">32ms</span>
-          <span class="text-[10px] text-emerald-400 block mt-0.5">Optimal Connection</span>
-        </div>
-      </div>
-
-      <!-- Live Ping Feedback Button -->
-      <button onclick="pingVisitorCount()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 text-black font-bold text-xs tracking-wider uppercase shadow-[0_0_20px_rgba(255,215,0,0.35)] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
-        <span>✨</span>
-        <span>Tap to Ping Visitor Counter</span>
-      </button>
-
-      <p class="text-[10px] text-center text-neutral-500">
-        Continuous telemetry synchronized for 24krt.com
-      </p>
+    <div class="views-badge">
+      <img src="https://countapi.mileshilliard.com/api/v1/hit/24krt_official_visitors/shield?text=Visits&bgcolor=ffd700&textcolor=000000" alt="Live Views Count">
     </div>
   </div>
-
-  <script>
-    let isSoundMuted = false;
-    let audioContext = null;
-
-    function getAudioCtx() {
-      if (!audioContext) {
-        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
-        audioContext = new AudioCtxClass();
-      }
-      if (audioContext.state === 'suspended') {
-        audioContext.resume();
-      }
-      return audioContext;
-    }
-
-    // Realistic Metallic Gold Bullion Clink Sound
-    function playGoldClinkSound() {
-      if (isSoundMuted) return;
-      try {
-        const ctx = getAudioCtx();
-        const now = ctx.currentTime;
-
-        // Metallic resonance frequencies (pure ringing metal harmonics)
-        const frequencies = [1860, 2480, 3120, 4200];
-
-        frequencies.forEach((freq, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-
-          osc.type = idx === 0 ? 'sine' : 'triangle';
-          osc.frequency.setValueAtTime(freq, now);
-
-          gain.gain.setValueAtTime(0, now);
-          gain.gain.linearRampToValueAtTime(0.18 / (idx + 1), now + 0.005);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.8 + idx * 0.2);
-
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-
-          osc.start(now);
-          osc.stop(now + 1.2);
-        });
-
-        // Soft sub resonance
-        const sub = ctx.createOscillator();
-        const subGain = ctx.createGain();
-        sub.type = 'sine';
-        sub.frequency.setValueAtTime(340, now);
-        subGain.gain.setValueAtTime(0.12, now);
-        subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-        sub.connect(subGain);
-        subGain.connect(ctx.destination);
-        sub.start(now);
-        sub.stop(now + 0.45);
-
-      } catch (e) {
-        console.warn('Audio play restricted:', e);
-      }
-    }
-
-    function toggleAudio() {
-      isSoundMuted = !isSoundMuted;
-      document.getElementById('audioIcon').textContent = isSoundMuted ? '🔇' : '🔊';
-      document.getElementById('audioLabel').textContent = isSoundMuted ? 'Muted' : 'Sound On';
-    }
-  </script>
-
-  <script>
-    // Procedural High-Resolution Gold Ingot Bump & Stamp Texture Generator
-    function createGoldBullionTexture() {
-      const canvas = document.createElement('canvas');
-      canvas.width = 1024;
-      canvas.height = 512;
-      const ctx = canvas.getContext('2d');
-
-      // Base Gold Gradient
-      const grad = ctx.createLinearGradient(0, 0, 1024, 512);
-      grad.addColorStop(0.0, '#e8b835');
-      grad.addColorStop(0.3, '#ffd700');
-      grad.addColorStop(0.6, '#ffe57f');
-      grad.addColorStop(1.0, '#c9961a');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 1024, 512);
-
-      // Fine Metallic Brushed Texture Lines
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-      for (let i = 0; i < 500; i++) {
-        const y = Math.random() * 512;
-        ctx.fillRect(0, y, 1024, Math.random() * 2 + 0.5);
-      }
-
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
-      for (let i = 0; i < 400; i++) {
-        const y = Math.random() * 512;
-        ctx.fillRect(0, y, 1024, Math.random() * 1.5 + 0.5);
-      }
-
-      // Engraved Bullion Border
-      ctx.strokeStyle = 'rgba(120, 80, 5, 0.6)';
-      ctx.lineWidth = 6;
-      ctx.strokeRect(40, 40, 944, 432);
-
-      ctx.strokeStyle = 'rgba(255, 245, 180, 0.5)';
-      ctx.lineWidth = 3;
-      ctx.strokeRect(44, 44, 936, 424);
-
-      // Stamped Official Assayer Seal
-      ctx.beginPath();
-      ctx.arc(512, 140, 55, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(110, 70, 5, 0.7)';
-      ctx.lineWidth = 4;
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(512, 140, 48, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(255, 245, 180, 0.4)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      // Seal Inner Logo
-      ctx.font = 'bold 36px "Cinzel", serif';
-      ctx.fillStyle = 'rgba(110, 70, 5, 0.85)';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('24K', 512, 142);
-
-      // 999.9 Pure Gold Inscription
-      ctx.font = '900 52px "Cinzel", serif';
-      ctx.fillStyle = 'rgba(100, 65, 5, 0.9)';
-      ctx.fillText('999.9 FINE GOLD', 512, 245);
-
-      // Sub-inscriptions (Weight & Serial Number)
-      ctx.font = 'bold 34px "Plus Jakarta Sans", sans-serif';
-      ctx.fillStyle = 'rgba(110, 70, 5, 0.8)';
-      ctx.fillText('NET WT 1000g', 512, 310);
-
-      ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
-      ctx.fillStyle = 'rgba(90, 55, 5, 0.75)';
-      ctx.fillText('MELTER ASSAYER • SWISS CRAFT', 512, 365);
-
-      // Unique Serial Number
-      ctx.font = 'bold 28px monospace';
-      ctx.fillStyle = 'rgba(120, 75, 5, 0.85)';
-      ctx.fillText('№ 24K-88942-AU', 512, 425);
-
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.anisotropy = 16;
-      return texture;
-    }
-
-    // Bump Map for Realistic Deep Stamping
-    function createGoldBumpTexture() {
-      const canvas = document.createElement('canvas');
-      canvas.width = 1024;
-      canvas.height = 512;
-      const ctx = canvas.getContext('2d');
-
-      ctx.fillStyle = '#808080';
-      ctx.fillRect(0, 0, 1024, 512);
-
-      // Engraved borders
-      ctx.strokeStyle = '#404040';
-      ctx.lineWidth = 8;
-      ctx.strokeRect(40, 40, 944, 432);
-
-      // Stamp Seal Bump
-      ctx.beginPath();
-      ctx.arc(512, 140, 55, 0, Math.PI * 2);
-      ctx.strokeStyle = '#303030';
-      ctx.lineWidth = 5;
-      ctx.stroke();
-
-      ctx.font = 'bold 36px "Cinzel", serif';
-      ctx.fillStyle = '#202020';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('24K', 512, 142);
-
-      ctx.font = '900 52px "Cinzel", serif';
-      ctx.fillText('999.9 FINE GOLD', 512, 245);
-
-      ctx.font = 'bold 34px "Plus Jakarta Sans", sans-serif';
-      ctx.fillText('NET WT 1000g', 512, 310);
-
-      ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
-      ctx.fillText('MELTER ASSAYER • SWISS CRAFT', 512, 365);
-
-      ctx.font = 'bold 28px monospace';
-      ctx.fillText('№ 24K-88942-AU', 512, 425);
-
-      const bumpTex = new THREE.CanvasTexture(canvas);
-      bumpTex.anisotropy = 16;
-      return bumpTex;
-    }
-  </script>
-
-  <script>
-    let scene, camera, renderer, goldGroup;
-    let goldMaterial, sideGoldMaterial;
-    let particlesMesh;
-    let isDragging = false;
-    let previousPointerPosition = { x: 0, y: 0 };
-    let targetRotationX = 0.28;
-    let targetRotationY = -0.55;
-    let currentRotationX = 0.28;
-    let currentRotationY = -0.55;
-
-    function init3DExperience() {
-      const container = document.getElementById('canvas3d');
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-
-      // 1. Scene & Depth Fog
-      scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(0x060502, 0.035);
-
-      // 2. Camera Setup
-      camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
-      camera.position.set(0, 1.2, 7.2);
-
-      // 3. Renderer with Tonemapping
-      renderer = new THREE.WebGLRenderer({
-        canvas: container,
-        antialias: true,
-        alpha: true,
-        powerPreference: 'high-performance'
-      });
-      renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.35;
-      renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-      // 4. Procedural Studio Cube Environment for High-Reflection Speculars
-      const envRenderTarget = new THREE.WebGLCubeRenderTarget(256);
-      const cubeCamera = new THREE.CubeCamera(0.1, 10, envRenderTarget);
-      
-      // Temporary environment illumination objects
-      const envScene = new THREE.Scene();
-      const warmLightGeo = new THREE.BoxGeometry(20, 20, 20);
-      const warmLightMat = new THREE.MeshBasicMaterial({ color: 0xffe6a3, side: THREE.BackSide });
-      envScene.add(new THREE.Mesh(warmLightGeo, warmLightMat));
-      cubeCamera.update(renderer, envScene);
-
-      // 5. Studio Lighting Rig
-      const ambientLight = new THREE.AmbientLight(0xfff1cf, 0.9);
-      scene.add(ambientLight);
-
-      // Key Warm Golden Spotlight
-      const keySpot = new THREE.SpotLight(0xfff0aa, 5.5, 30, Math.PI / 4, 0.35, 1.2);
-      keySpot.position.set(5, 7, 6);
-      keySpot.castShadow = true;
-      keySpot.shadow.mapSize.width = 1024;
-      keySpot.shadow.mapSize.height = 1024;
-      scene.add(keySpot);
-
-      // Crisp White Highlight Rim Light
-      const rimLight = new THREE.DirectionalLight(0xffffff, 4.0);
-      rimLight.position.set(-6, 5, -3);
-      scene.add(rimLight);
-
-      // Deep Golden Fill Light from Underneath
-      const underFill = new THREE.PointLight(0xd4af37, 2.8, 15);
-      underFill.position.set(0, -3, 3);
-      scene.add(underFill);
-
-      // 6. Realistic 24K Physical PBR Materials
-      const bullionTexture = createGoldBullionTexture();
-      const bullionBump = createGoldBumpTexture();
-
-      // Top Face Material with Stamped Seal
-      goldMaterial = new THREE.MeshStandardMaterial({
-        color: 0xffd23d,
-        metalness: 0.96,
-        roughness: 0.18,
-        envMap: envRenderTarget.texture,
-        envMapIntensity: 2.2,
-        map: bullionTexture,
-        bumpMap: bullionBump,
-        bumpScale: 0.035,
-        roughnessMap: bullionBump
-      });
-
-      // Side Chamfer Material (Smooth Beveled Gold)
-      sideGoldMaterial = new THREE.MeshStandardMaterial({
-        color: 0xffca36,
-        metalness: 0.96,
-        roughness: 0.22,
-        envMap: envRenderTarget.texture,
-        envMapIntensity: 2.0
-      });
-
-      // Assemble 3D Gold Bar Stack
-      goldGroup = new THREE.Group();
-
-      // Build a realistic trapezoidal bullion ingot
-      function createGoldBarMesh() {
-        const barGroup = new THREE.Group();
-        
-        // Classic Bullion Dimensions: L=3.6, W=1.8, H=0.8
-        const length = 3.4;
-        const width = 1.7;
-        const height = 0.72;
-        const taper = 0.86; // Classic gold bullion taper
-
-        // Custom Beveled Hull Geometry
-        const geo = new THREE.BoxGeometry(width, height, length, 4, 4, 4);
-        
-        // Taper top vertices to form authentic ingot shape
-        const pos = geo.attributes.position;
-        for (let i = 0; i < pos.count; i++) {
-          const y = pos.getY(i);
-          if (y > 0) {
-            pos.setX(i, pos.getX(i) * taper);
-            pos.setZ(i, pos.getZ(i) * taper);
-          }
-        }
-        geo.computeVertexNormals();
-
-        // Multi-face material assignment
-        const materials = [
-          sideGoldMaterial, // right
-          sideGoldMaterial, // left
-          goldMaterial,     // top stamped
-          sideGoldMaterial, // bottom
-          sideGoldMaterial, // front
-          sideGoldMaterial  // back
-        ];
-
-        const barMesh = new THREE.Mesh(geo, materials);
-        barMesh.castShadow = true;
-        barMesh.receiveShadow = true;
-        barGroup.add(barMesh);
-
-        return barGroup;
-      }
-
-      // Pyramidal 3-Bar Showcase Stack
-      // Base Left Bar
-      const bar1 = createGoldBarMesh();
-      bar1.position.set(-1.05, -0.4, 0);
-      goldGroup.add(bar1);
-
-      // Base Right Bar
-      const bar2 = createGoldBarMesh();
-      bar2.position.set(1.05, -0.4, 0);
-      goldGroup.add(bar2);
-
-      // Top Centered Hero Bar
-      const bar3 = createGoldBarMesh();
-      bar3.position.set(0, 0.42, 0);
-      goldGroup.add(bar3);
-
-      scene.add(goldGroup);
-
-      // 7. Floating 24K Gold Dust Particle Field
-      const particleCount = 140;
-      const particleGeo = new THREE.BufferGeometry();
-      const particlePositions = new Float32Array(particleCount * 3);
-      const particleScales = new Float32Array(particleCount);
-
-      for (let i = 0; i < particleCount; i++) {
-        particlePositions[i * 3] = (Math.random() - 0.5) * 14;
-        particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 10;
-        particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 10;
-        particleScales[i] = Math.random() * 0.08 + 0.02;
-      }
-
-      particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-
-      // Golden Specular Particle Material
-      const particleMat = new THREE.PointsMaterial({
-        color: 0xffd700,
-        size: 0.06,
-        transparent: true,
-        opacity: 0.75,
-        blending: THREE.AdditiveBlending
-      });
-
-      particlesMesh = new THREE.Points(particleGeo, particleMat);
-      scene.add(particlesMesh);
-
-      // 8. Attach Mouse & Mobile Touch Interaction Listeners
-      setupPointerControls(container);
-
-      // Resize Listener
-      window.addEventListener('resize', onWindowResize);
-    }
-
-    function onWindowResize() {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    }
-
-    function setupPointerControls(element) {
-      // Touch Handling for Mobile Devices
-      element.addEventListener('touchstart', (e) => {
-        if (e.touches.length === 1) {
-          isDragging = true;
-          previousPointerPosition.x = e.touches[0].clientX;
-          previousPointerPosition.y = e.touches[0].clientY;
-        }
-      }, { passive: false });
-
-      window.addEventListener('touchmove', (e) => {
-        if (!isDragging || e.touches.length !== 1) return;
-        const deltaX = e.touches[0].clientX - previousPointerPosition.x;
-        const deltaY = e.touches[0].clientY - previousPointerPosition.y;
-
-        targetRotationY += deltaX * 0.008;
-        targetRotationX += deltaY * 0.008;
-        targetRotationX = Math.max(-0.6, Math.min(0.8, targetRotationX));
-
-        previousPointerPosition.x = e.touches[0].clientX;
-        previousPointerPosition.y = e.touches[0].clientY;
-      }, { passive: false });
-
-      window.addEventListener('touchend', () => { isDragging = false; });
-
-      // Mouse Handling for Desktop
-      element.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        previousPointerPosition.x = e.clientX;
-        previousPointerPosition.y = e.clientY;
-      });
-
-      window.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        const deltaX = e.clientX - previousPointerPosition.x;
-        const deltaY = e.clientY - previousPointerPosition.y;
-
-        targetRotationY += deltaX * 0.007;
-        targetRotationX += deltaY * 0.007;
-        targetRotationX = Math.max(-0.6, Math.min(0.8, targetRotationX));
-
-        previousPointerPosition.x = e.clientX;
-        previousPointerPosition.y = e.clientY;
-      });
-
-      window.addEventListener('mouseup', () => { isDragging = false; });
-    }
-
-    function resetCameraView() {
-      targetRotationX = 0.28;
-      targetRotationY = -0.55;
-      playGoldClinkSound();
-    }
-
-    let clock = new THREE.Clock();
-
-    function animateLoop() {
-      requestAnimationFrame(animateLoop);
-      const elapsedTime = clock.getElapsedTime();
-
-      // Smooth Inertia Interpolation (Lerp)
-      currentRotationX += (targetRotationX - currentRotationX) * 0.06;
-      currentRotationY += (targetRotationY - currentRotationY) * 0.06;
-
-      if (goldGroup) {
-        // Continuous gentle floating & breathing motion
-        const floatOffset = Math.sin(elapsedTime * 1.5) * 0.08;
-        goldGroup.position.y = floatOffset;
-
-        // Auto-rotation when not actively being dragged
-        if (!isDragging) {
-          targetRotationY += 0.0022;
-        }
-
-        goldGroup.rotation.x = currentRotationX;
-        goldGroup.rotation.y = currentRotationY;
-      }
-
-      // Gently drift gold dust particles
-      if (particlesMesh) {
-        particlesMesh.rotation.y = elapsedTime * 0.04;
-        particlesMesh.rotation.x = Math.sin(elapsedTime * 0.02) * 0.05;
-      }
-
-      renderer.render(scene, camera);
-    }
-  </script>
-
-  <script>
-    // Real-Time Visitor Counter Controller (LocalStorage + Incrementor)
-    const STORAGE_KEY = '24krt_live_visitors_v1';
-    let visitorCount = 1248;
-
-    function initVisitorCounter() {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          visitorCount = parseInt(saved, 10) + 1;
-        } else {
-          visitorCount = 1248 + Math.floor(Math.random() * 45);
-        }
-        localStorage.setItem(STORAGE_KEY, visitorCount);
-      } catch (err) {
-        visitorCount = 1249;
-      }
-
-      updateCounterDisplays();
-
-      // Simulated periodic telemetry ping (simulates other active live viewers across the web)
-      setInterval(() => {
-        if (Math.random() > 0.6) {
-          visitorCount += 1;
-          updateCounterDisplays();
-        }
-      }, 12000);
-    }
-
-    function updateCounterDisplays() {
-      const formatted = visitorCount.toLocaleString();
-      const badgeElem = document.getElementById('displayVisitorCount');
-      const modalTotalElem = document.getElementById('modalTotalHits');
-      const modalTodayElem = document.getElementById('modalTodayHits');
-
-      if (badgeElem) badgeElem.textContent = formatted;
-      if (modalTotalElem) modalTotalElem.textContent = formatted;
-      if (modalTodayElem) modalTodayElem.textContent = Math.floor(visitorCount * 0.14).toString();
-    }
-
-    // Modal Display Triggers
-    function handleVisitorCardClick() {
-      playGoldClinkSound();
-      openTelemetryModal();
-    }
-
-    function openTelemetryModal() {
-      const backdrop = document.getElementById('telemetryBackdrop');
-      const dialog = document.getElementById('telemetryDialog');
-      backdrop.classList.remove('opacity-0', 'pointer-events-none');
-      backdrop.classList.add('opacity-100', 'pointer-events-auto');
-      dialog.classList.remove('scale-95');
-      dialog.classList.add('scale-100');
-
-      // Randomize active viewers count slightly for live feel
-      const activeElem = document.getElementById('modalActiveViewers');
-      if (activeElem) {
-        activeElem.textContent = (Math.floor(Math.random() * 6) + 4).toString();
-      }
-    }
-
-    function closeTelemetryModal() {
-      const backdrop = document.getElementById('telemetryBackdrop');
-      const dialog = document.getElementById('telemetryDialog');
-      backdrop.classList.remove('opacity-100', 'pointer-events-auto');
-      backdrop.classList.add('opacity-0', 'pointer-events-none');
-      dialog.classList.remove('scale-100');
-      dialog.classList.add('scale-95');
-    }
-
-    function handleBackdropClick(event) {
-      if (event.target === document.getElementById('telemetryBackdrop')) {
-        closeTelemetryModal();
-      }
-    }
-
-    // Manual Visitor Ping (Interactive Click-to-Count with Sound & Sparkle Feedback)
-    function pingVisitorCount() {
-      playGoldClinkSound();
-      visitorCount += 1;
-      try {
-        localStorage.setItem(STORAGE_KEY, visitorCount);
-      } catch (e) {}
-      updateCounterDisplays();
-
-      // Trigger temporary celebratory bump on gold bars
-      if (goldGroup) {
-        targetRotationY += 0.4;
-      }
-    }
-
-    // Initialize application on window load
-    window.addEventListener('load', () => {
-      init3DExperience();
-      animateLoop();
-      initVisitorCounter();
-    });
-  </script>
 </body>
 </html>
