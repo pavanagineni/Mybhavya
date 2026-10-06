@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>24krt.com — A Doctor's Day</title>
+  <title>24krt.com</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -17,99 +17,95 @@
       -webkit-tap-highlight-color: transparent;
     }
     body {
-      background: #0d0a06;
+      background: #000000;
       color: #fff;
       font-family: 'Plus Jakarta Sans', sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       overflow: hidden;
       position: relative;
     }
 
-    /* Ambient Warm Background Aura */
+    /* Ambient Warm Gold Glow */
     .bg-aura {
       position: absolute;
-      width: 450px;
-      height: 450px;
-      background: radial-gradient(circle, rgba(255, 215, 0, 0.12) 0%, rgba(255, 140, 0, 0.05) 50%, transparent 70%);
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.14) 0%, rgba(212, 144, 0, 0.04) 50%, transparent 70%);
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
       z-index: 1;
-      animation: pulseAura 4s ease-in-out infinite alternate;
+      animation: pulseAura 4.5s ease-in-out infinite alternate;
     }
     @keyframes pulseAura {
-      0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+      0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
       100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
     }
 
-    /* Header */
+    /* Top Logo */
     header {
-      padding-top: max(1.2rem, env(safe-area-inset-top));
+      position: absolute;
+      top: max(1.8rem, env(safe-area-inset-top));
       text-align: center;
-      z-index: 10;
+      z-index: 20;
     }
     .brand {
       font-family: 'Cinzel', serif;
-      font-size: clamp(1.8rem, 6vw, 2.6rem);
+      font-size: clamp(2rem, 7vw, 3rem);
       font-weight: 900;
-      letter-spacing: 0.14em;
-      background: linear-gradient(135deg, #ffffff 0%, #ffd700 50%, #b8860b 100%);
+      letter-spacing: 0.16em;
+      background: linear-gradient(135deg, #ffffff 0%, #fff099 25%, #ffd700 55%, #d49000 80%, #ffffff 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.4));
-    }
-    .subhead {
-      font-size: 0.75rem;
-      letter-spacing: 0.25em;
-      color: #c9ab6f;
-      text-transform: uppercase;
-      margin-top: 2px;
+      filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.45));
     }
 
     /* Story Card Viewport */
     .story-card {
       position: relative;
-      width: min(92vw, 380px);
-      height: 520px;
-      background: rgba(22, 17, 10, 0.85);
+      width: min(92vw, 390px);
+      height: 540px;
+      background: rgba(18, 14, 8, 0.85);
       border: 1px solid rgba(255, 215, 0, 0.35);
-      border-radius: 28px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.15);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      border-radius: 30px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(255, 215, 0, 0.15);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       display: flex;
       flex-direction: column;
       overflow: hidden;
       z-index: 10;
+      margin-top: 2rem;
     }
 
-    /* Story Progress Bars */
-    .progress-bar-wrap {
+    /* Step Indicators (No timer, filled by step) */
+    .steps-wrap {
       display: flex;
       gap: 6px;
-      padding: 14px 16px 8px;
-      z-index: 20;
+      padding: 16px 18px 8px;
+      z-index: 30;
     }
-    .bar-track {
+    .step-track {
       flex: 1;
       height: 3px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.18);
       border-radius: 3px;
       overflow: hidden;
     }
-    .bar-fill {
+    .step-fill {
       height: 100%;
       width: 0%;
       background: #ffd700;
       box-shadow: 0 0 8px #ffd700;
+      transition: width 0.3s ease;
     }
 
-    /* Scene Stage */
+    /* Interactive Stage */
     .stage {
       flex: 1;
       position: relative;
@@ -117,12 +113,23 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 24px;
       text-align: center;
       cursor: pointer;
     }
 
-    /* Animated Illustration Box */
+    /* Tap Control Zones (Left: Previous, Right: Next) */
+    .tap-zone {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 35%;
+      z-index: 25;
+    }
+    .tap-left { left: 0; }
+    .tap-right { right: 0; width: 65%; }
+
+    /* Scene Art */
     .scene-art {
       width: 190px;
       height: 190px;
@@ -135,23 +142,22 @@
     .scene-art svg {
       width: 100%;
       height: 100%;
-      filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+      filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.35));
     }
 
     /* Timestamp Badge */
     .time-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
       background: rgba(255, 215, 0, 0.15);
-      border: 1px solid rgba(255, 215, 0, 0.4);
+      border: 1px solid rgba(255, 215, 0, 0.45);
       color: #ffd700;
-      padding: 5px 14px;
+      padding: 5px 16px;
       border-radius: 30px;
       font-size: 0.8rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      margin-bottom: 12px;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
     }
 
     /* Scene Text */
@@ -159,72 +165,49 @@
       font-family: 'Cinzel', serif;
       font-size: 1.35rem;
       font-weight: 700;
-      color: #fff4bf;
-      margin-bottom: 8px;
+      color: #fff6c9;
+      margin-bottom: 10px;
+      line-height: 1.3;
     }
     .scene-desc {
       font-size: 0.9rem;
       color: #d1c1a5;
-      line-height: 1.5;
-      max-width: 300px;
+      line-height: 1.55;
+      max-width: 310px;
     }
 
-    /* Floating Heart Reaction */
+    /* Floating Heart on Tap */
     .heart-float {
       position: absolute;
       color: #ff5e7e;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       pointer-events: none;
-      animation: floatUpHeart 1.8s ease-out forwards;
+      animation: floatUp 1.6s ease-out forwards;
+      z-index: 40;
     }
-    @keyframes floatUpHeart {
+    @keyframes floatUp {
       0% { opacity: 1; transform: translateY(0) scale(0.6); }
-      100% { opacity: 0; transform: translateY(-70px) scale(1.4); }
+      100% { opacity: 0; transform: translateY(-75px) scale(1.4); }
     }
 
-    /* Footer: Visitor Counter */
-    footer {
-      padding-bottom: max(1.2rem, env(safe-area-inset-bottom));
-      z-index: 10;
-    }
-    .counter-pill {
-      background: rgba(18, 14, 8, 0.7);
-      border: 1px solid rgba(255, 215, 0, 0.35);
-      backdrop-filter: blur(12px);
-      padding: 0.45rem 1.4rem;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
-    }
-    .pulse-dot {
-      width: 7px;
-      height: 7px;
-      background: #ffd700;
-      border-radius: 50%;
-      box-shadow: 0 0 10px #ffd700;
-      animation: dotPulse 1.6s infinite ease-in-out;
-    }
-    @keyframes dotPulse {
-      0%, 100% { opacity: 0.3; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1.3); }
-    }
-    .counter-txt {
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: #ffd700;
-    }
-
-    /* Subtitle tap hints */
-    .tap-hint {
+    /* Bottom Prompt */
+    .tap-guide {
       position: absolute;
-      bottom: 12px;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      color: rgba(255, 255, 255, 0.35);
+      bottom: 16px;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      color: rgba(255, 215, 0, 0.45);
       text-transform: uppercase;
+      z-index: 20;
+    }
+
+    /* Finale Special Styling */
+    .finale-glow {
+      animation: grandGlow 2.5s infinite alternate ease-in-out;
+    }
+    @keyframes grandGlow {
+      0% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5)); transform: scale(0.98); }
+      100% { filter: drop-shadow(0 0 50px rgba(255, 215, 0, 1)); transform: scale(1.04); }
     }
   </style>
 </head>
@@ -234,43 +217,36 @@
 
   <header>
     <div class="brand">24krt.com</div>
-    <div class="subhead">A Doctor's Daily Routine</div>
   </header>
 
-  <!-- Interactive Story Container -->
   <div class="story-card" id="storyCard">
-    <div class="progress-bar-wrap" id="progressWrap"></div>
+    <!-- Step Trackers -->
+    <div class="steps-wrap" id="stepsWrap"></div>
 
-    <div class="stage" id="stageArea">
+    <!-- Interactive Tap Zones -->
+    <div class="tap-zone tap-left" id="tapPrev"></div>
+    <div class="tap-zone tap-right" id="tapNext"></div>
+
+    <div class="stage">
       <div class="time-badge" id="timeBadge">6:00 AM</div>
       <div class="scene-art" id="sceneArt"></div>
-      <h2 class="scene-title" id="sceneTitle">Waking Up & Rush</h2>
-      <p class="scene-desc" id="sceneDesc">Alarm sounds. Morning routine, a few hurried bites of breakfast, packing the rest, and rushing to catch the morning bus.</p>
-      <div class="tap-hint">Tap anywhere to advance</div>
+      <h2 class="scene-title" id="sceneTitle">...</h2>
+      <p class="scene-desc" id="sceneDesc">...</p>
+      <div class="tap-guide" id="tapGuide">Tap to continue →</div>
     </div>
   </div>
 
-  <footer>
-    <div class="counter-pill">
-      <div class="pulse-dot"></div>
-      <span class="counter-txt" id="v-count">...</span>
-    </div>
-  </footer>
-
   <script>
-    // Story Data with Hand-Crafted Responsive SVG Scenes
     const scenes = [
       {
         time: "6:00 AM",
-        title: "The Morning Awakening",
-        desc: "Alarm rings. Quick splashes of cold water, getting ready fast, eating a small bite, packing the rest in a tiffin, and off to the bus.",
+        title: "Morning Awakening",
+        desc: "Alarm rings. Quick splashes of cold water, getting ready fast, eating a small bite, packing the rest in a tiffin, and off to catch the bus.",
         svg: `
           <svg viewBox="0 0 100 100">
-            <!-- Clock -->
             <circle cx="50" cy="50" r="38" fill="none" stroke="#ffd700" stroke-width="3" stroke-dasharray="2 3"/>
             <path d="M50 25 V50 H68" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
             <circle cx="50" cy="50" r="4" fill="#ffd700"/>
-            <!-- Cute coffee / tiffin steam -->
             <path d="M30 40 Q35 30 30 20" stroke="#ffa834" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.8"/>
             <path d="M70 40 Q75 30 70 20" stroke="#ffa834" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.8"/>
           </svg>
@@ -279,14 +255,12 @@
       {
         time: "7:15 AM",
         title: "Commute to Hospital",
-        desc: "Seated by the morning bus window. City passing by as she gathers energy for rounds with stethoscope in hand.",
+        desc: "Seated by the bus window. The cool morning breeze flows in as she gathers her thoughts and energy for the ward.",
         svg: `
           <svg viewBox="0 0 100 100">
-            <!-- Bus Shape -->
             <rect x="20" y="30" width="60" height="40" rx="8" fill="#1f180d" stroke="#ffd700" stroke-width="3"/>
             <rect x="26" y="36" width="20" height="16" rx="3" fill="#ffd700" opacity="0.4"/>
             <rect x="52" y="36" width="20" height="16" rx="3" fill="#ffd700" opacity="0.4"/>
-            <!-- Wheels -->
             <circle cx="34" cy="72" r="7" fill="#0d0a06" stroke="#ffd700" stroke-width="2"/>
             <circle cx="66" cy="72" r="7" fill="#0d0a06" stroke="#ffd700" stroke-width="2"/>
             <path d="M10 82 H90" stroke="#b8860b" stroke-width="2" stroke-dasharray="6 4"/>
@@ -296,26 +270,23 @@
       {
         time: "10:00 AM",
         title: "Call & Breakfast Breather",
-        desc: "A brief pause between patients. She dials her husband: 'Did you eat?' She eats her packed morning food with a smiling heart.",
+        desc: "A brief pause between patients. She calls her husband: 'Did you eat? Did you wake up?' Eating her packed breakfast with a smiling heart.",
         svg: `
           <svg viewBox="0 0 100 100">
-            <!-- Phone Calling & Hearts -->
             <rect x="34" y="24" width="32" height="54" rx="6" fill="#1c160e" stroke="#ffd700" stroke-width="3"/>
             <circle cx="50" cy="70" r="3" fill="#ffd700"/>
             <path d="M44 42 Q50 35 56 42" stroke="#4ade80" stroke-width="3" fill="none" stroke-linecap="round"/>
             <path d="M42 46 L58 46" stroke="#4ade80" stroke-width="2"/>
-            <!-- Heart glow -->
             <path d="M72 26 C72 20, 80 20, 80 26 C80 32, 72 38, 72 38 C72 38, 64 32, 64 26 C64 20, 72 20, 72 26 Z" fill="#ff5e7e"/>
           </svg>
         `
       },
       {
         time: "12:00 PM – 2:00 PM",
-        title: "Ward Rounds & Operation",
-        desc: "Deep focus. Checking vitals, writing charts, consulting patients, and active duty in the operation theatre.",
+        title: "Wards & Operation Theatre",
+        desc: "Stepping into surgical scrubs under bright OT lights. Total focus, writing charts, consulting patients, and managing duties.",
         svg: `
           <svg viewBox="0 0 100 100">
-            <!-- Medical Cross & Stethoscope Heartbeat -->
             <circle cx="50" cy="50" r="36" fill="#1a140b" stroke="#ffd700" stroke-width="2"/>
             <path d="M22 52 H38 L44 36 L52 66 L60 44 L66 52 H78" stroke="#ffd700" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             <rect x="47" y="18" width="6" height="14" rx="2" fill="#ff5e7e"/>
@@ -326,28 +297,24 @@
       {
         time: "2:00 PM",
         title: "Lunch & Battery Lifeline",
-        desc: "Plugging her phone to charge so it never runs out. Eating lunch, sharing every detail of her morning with her husband.",
+        desc: "Plugging her phone into the charger so it never runs out. Eating lunch, sharing every detail of her day with her husband.",
         svg: `
           <svg viewBox="0 0 100 100">
-            <!-- Battery Charging -->
             <rect x="25" y="32" width="46" height="36" rx="6" fill="#18130a" stroke="#ffd700" stroke-width="3"/>
             <rect x="71" y="44" width="5" height="12" rx="2" fill="#ffd700"/>
-            <!-- Lightning Bolt -->
             <polygon points="50,22 40,50 49,50 46,72 59,44 50,44" fill="#ffd700" stroke="#fff" stroke-width="1"/>
           </svg>
         `
       },
       {
         time: "5:00 PM",
-        title: "Evening Bus Ride Home",
-        desc: "Afternoon tests and shifts wrapped up. Calling him: 'Heading home now!' Watching the sunset hues from the bus.",
+        title: "Heading Home on the Bus",
+        desc: "Shift wrapped up. Calling him: 'Heading home now!' Leaning against the window as the golden evening sunset sets in.",
         svg: `
           <svg viewBox="0 0 100 100">
-            <!-- Sunset & Road -->
             <circle cx="50" cy="52" r="28" fill="#ff9900" opacity="0.75"/>
             <line x1="12" y1="58" x2="88" y2="58" stroke="#ffd700" stroke-width="3"/>
             <path d="M30 84 L46 58 M70 84 L54 58" stroke="#c98a1a" stroke-width="2"/>
-            <!-- Bird Silhouettes -->
             <path d="M30 32 Q35 28 40 32 Q45 28 50 32" stroke="#fff" stroke-width="1.5" fill="none"/>
           </svg>
         `
@@ -355,13 +322,11 @@
       {
         time: "7:00 PM – 8:30 PM",
         title: "Snacks & Fresh Up Sync",
-        desc: "Arrives home. Chilled juice, evening snacks, and coordinated routines so both are freshened up and relaxed.",
+        desc: "Reaching home, chilled juice, snacks, and freshening up together across calls to unwind from the long day.",
         svg: `
           <svg viewBox="0 0 100 100">
-            <!-- Home & Fresh Glow -->
             <path d="M25 45 L50 25 L75 45 V75 H25 Z" fill="#1c160d" stroke="#ffd700" stroke-width="3" stroke-linejoin="round"/>
             <rect x="42" y="52" width="16" height="23" fill="#ffd700" opacity="0.6"/>
-            <!-- Droplet Sparkles -->
             <circle cx="50" cy="18" r="3" fill="#80d4ff"/>
             <circle cx="30" cy="28" r="2" fill="#80d4ff"/>
             <circle cx="70" cy="28" r="2" fill="#80d4ff"/>
@@ -370,122 +335,119 @@
       },
       {
         time: "9:30 PM – Midnight",
-        title: "Endless Calls & Sweet Sleep",
-        desc: "Both tucked in bed, talking on the phone softly about everything until their eyelids grow heavy and sleep takes over.",
+        title: "Pillow Talk Till Sleep",
+        desc: "Tucked comfortably in bed with the phone beside her cheek, talking and laughing until sleep gently takes over.",
         svg: `
           <svg viewBox="0 0 100 100">
-            <!-- Crescent Moon & Golden Stars -->
             <path d="M56 22 C40 22 28 35 28 51 C28 67 41 80 57 80 C50 74 46 63 46 51 C46 39 50 28 56 22 Z" fill="#ffd700"/>
             <polygon points="68,28 70,33 75,34 71,38 72,43 68,40 64,43 65,38 61,34 66,33" fill="#fff"/>
             <polygon points="78,48 79,51 83,52 80,55 81,59 78,57 75,59 76,55 73,52 77,51" fill="#fff" transform="scale(0.8) translate(15, 10)"/>
+          </svg>
+        `
+      },
+      {
+        time: "PURE GOLD",
+        title: "She's Not Just a Doctor",
+        desc: "She's 24krt gold.",
+        svg: `
+          <svg viewBox="0 0 100 100" class="finale-glow">
+            <!-- 24K Ingot & Diamond Crown -->
+            <polygon points="50,14 62,32 50,38 38,32" fill="#bdf0ff" stroke="#fff" stroke-width="1.5"/>
+            <rect x="22" y="44" width="56" height="28" rx="6" fill="url(#goldGrad)" stroke="#fff" stroke-width="2"/>
+            <text x="50" y="62" font-family="'Cinzel', serif" font-size="12" font-weight="900" fill="#3b2502" text-anchor="middle" letter-spacing="1">24KRT</text>
+            <defs>
+              <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fff8cc"/>
+                <stop offset="40%" stop-color="#ffd700"/>
+                <stop offset="80%" stop-color="#cc8f00"/>
+                <stop offset="100%" stop-color="#805900"/>
+              </linearGradient>
+            </defs>
           </svg>
         `
       }
     ];
 
     let currentIdx = 0;
-    const duration = 4800; // 4.8 seconds per scene
-    let timer = null;
-    let startTime = null;
-
-    const progressWrap = document.getElementById('progressWrap');
+    const stepsWrap = document.getElementById('stepsWrap');
     const timeBadge = document.getElementById('timeBadge');
     const sceneArt = document.getElementById('sceneArt');
     const sceneTitle = document.getElementById('sceneTitle');
     const sceneDesc = document.getElementById('sceneDesc');
-    const stageArea = document.getElementById('stageArea');
+    const tapGuide = document.getElementById('tapGuide');
+    const storyCard = document.getElementById('storyCard');
 
-    // Build Progress Trackers
+    // Generate Step Indicators
     scenes.forEach((_, i) => {
       const track = document.createElement('div');
-      track.className = 'bar-track';
+      track.className = 'step-track';
       const fill = document.createElement('div');
-      fill.className = 'bar-fill';
+      fill.className = 'step-fill';
       fill.id = `fill-${i}`;
       track.appendChild(fill);
-      progressWrap.appendChild(track);
+      stepsWrap.appendChild(track);
     });
 
-    function renderScene(idx) {
+    function showScene(idx) {
       const s = scenes[idx];
       timeBadge.textContent = s.time;
       sceneArt.innerHTML = s.svg;
       sceneTitle.textContent = s.title;
       sceneDesc.textContent = s.desc;
 
-      // Update progress bars
+      if (idx === scenes.length - 1) {
+        tapGuide.textContent = "Tap to restart ↺";
+        sceneTitle.style.fontSize = "1.5rem";
+        sceneDesc.style.fontSize = "1.15rem";
+        sceneDesc.style.fontWeight = "700";
+        sceneDesc.style.color = "#ffd700";
+      } else {
+        tapGuide.textContent = "Tap right to continue →";
+        sceneTitle.style.fontSize = "1.35rem";
+        sceneDesc.style.fontSize = "0.9rem";
+        sceneDesc.style.fontWeight = "400";
+        sceneDesc.style.color = "#d1c1a5";
+      }
+
+      // Step Bars Fill
       for (let i = 0; i < scenes.length; i++) {
         const fill = document.getElementById(`fill-${i}`);
-        if (i < idx) {
+        if (i <= idx) {
           fill.style.width = '100%';
-        } else if (i > idx) {
+        } else {
           fill.style.width = '0%';
         }
       }
 
-      spawnHeart();
+      createHeart();
     }
 
-    function spawnHeart() {
+    function createHeart() {
       const heart = document.createElement('div');
       heart.className = 'heart-float';
       heart.innerHTML = '♥';
-      heart.style.left = (Math.random() * 60 + 20) + '%';
-      heart.style.top = '65%';
-      stageArea.appendChild(heart);
-      setTimeout(() => heart.remove(), 1800);
+      heart.style.left = (Math.random() * 50 + 25) + '%';
+      heart.style.top = '62%';
+      storyCard.appendChild(heart);
+      setTimeout(() => heart.remove(), 1600);
     }
 
-    function runProgress() {
-      startTime = performance.now();
-      const activeFill = document.getElementById(`fill-${currentIdx}`);
-
-      function tick(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min((elapsed / duration) * 100, 100);
-        activeFill.style.width = progress + '%';
-
-        if (progress < 100) {
-          timer = requestAnimationFrame(tick);
-        } else {
-          nextScene();
-        }
-      }
-      timer = requestAnimationFrame(tick);
-    }
-
-    function nextScene() {
-      cancelAnimationFrame(timer);
+    // Tap Right: Next
+    document.getElementById('tapNext').addEventListener('click', () => {
       currentIdx = (currentIdx + 1) % scenes.length;
-      renderScene(currentIdx);
-      runProgress();
-    }
-
-    // Tap to jump
-    stageArea.addEventListener('click', () => {
-      cancelAnimationFrame(timer);
-      nextScene();
+      showScene(currentIdx);
     });
 
-    // Start Story
-    renderScene(0);
-    runProgress();
-
-    // Live Visitor Tracker
-    (function () {
-      const el = document.getElementById('v-count');
-      let count = 2840;
-      try {
-        const key = '24krt_story_visitors';
-        const saved = localStorage.getItem(key);
-        if (saved) count = parseInt(saved, 10) + 1;
-        else count += Math.floor(Math.random() * 20);
-        localStorage.setItem(key, count);
-      } catch (e) {
-        count = 2865;
+    // Tap Left: Previous
+    document.getElementById('tapPrev').addEventListener('click', () => {
+      if (currentIdx > 0) {
+        currentIdx--;
+        showScene(currentIdx);
       }
-      el.textContent = count.toLocaleString() + ' VISITS';
-    })();
+    });
+
+    // Initial Load
+    showScene(0);
   </script>
 </body>
 </html>
